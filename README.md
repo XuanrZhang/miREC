@@ -11,25 +11,23 @@ KMC3 tool, a kmer counter, is used to obtain kmer frequences. Here is the instru
 ## Download & Usage
 
 	git clone https://github.com/XuanrZhang/miREC
-	cd InsEC	
-	chmod +x run.sh
-	pip install pandas (optional command, if you don't install pandas before)
-	
-	./run.sh [sequence.fa] [reads.fa]
+	cd miREC
+	make
+	chmod +x miREC.sh
+	./miREC.sh [run_type] [threshold_value] [k_1] [k_end] [File_Name] (run_type: default is mix, "only" for substitution errors only; threshold_value: default is 5)
 	e.g 
-	./run.sh ref.fa reads.fa
+	./miREC.sh 5 8 20 input.fq (correct substitution and indel errors, with threshold_value 5 and k_value from 8 to 20)
+	./miREC.sh only 5 8 20 input.fq (correct substitution errors only, with threshold_value 5 and k_value from 8 to 20)
   
 ## Data format
-Input: A read dataset in .fasta\fastq format and an nucleotide sequence of interests in .fasta format
+Input: A read dataset in fastq format
 
-	- reads.fa(\fq) : store the whole read data needed to be corrected.
-	- ref.fa : store the nucleotide sequence of interests (e.g. a sequence of genes or a sequence of coding region).
+	- reads.fq : store the whole read data needed to be corrected.
+	
+Output: A corrected read dataset 
 
-Output: A corrected read dataset only related to the given nucleotide sequence and An assembled contig based on corrected data
-
-	- corrected.fa :store corrected read data.
-	- contigs.fa :store the updated nucleotide sequence of the gene (or the genome region of interests).
-
+	- corrected.fq :store corrected read data.
+	
 	
 ## Citation
 Please cite the work "Aberration-corrected ultrafine analysis of miRNA reads at single-base resolution: better data makes better conclusion."
