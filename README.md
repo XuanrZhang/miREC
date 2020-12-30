@@ -20,7 +20,7 @@ KMC3 tool, a kmer counter, is used to obtain kmer frequences. Here is the instru
 	./miREC.sh -f input.fq -t 5 -s 8 -e 20  (correct substitution errors only, with threshold_value 5 and k_value from 8 to 20)
 	
 	
-Usage: ./miREC.sh [File_Name] [run_type] [threshold_value] [k_1] [k_end] 
+Usage: ./miREC.sh -f [File_Name] -s [k_1] -e [k_end] -t [threshold_value] [run_type]
 
 	Required OPTIONS:
 	-f [File_Name]: cleaned miRNA sequence dataset （fastq file）
