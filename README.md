@@ -14,10 +14,23 @@ KMC3 tool, a kmer counter, is used to obtain kmer frequences. Here is the instru
 	cd miREC
 	make
 	chmod +x miREC.sh
-	./miREC.sh [run_type] [threshold_value] [k_1] [k_end] [File_Name] (run_type: default is mix, "only" for substitution errors only; threshold_value: default is 5)
+	./miREC.sh -f [File_Name] -s [k_1] -e [k_end] -t [threshold_value] [run_type]
 	e.g 
-	./miREC.sh 5 8 20 input.fq (correct substitution and indel errors, with threshold_value 5 and k_value from 8 to 20)
-	./miREC.sh only 5 8 20 input.fq (correct substitution errors only, with threshold_value 5 and k_value from 8 to 20)
+	./miREC.sh -f input.fq -t 5 -s 8 -e 20  (correct substitution and indel errors, with threshold_value 5 and k_value from 8 to 20)
+	./miREC.sh -f input.fq -t 5 -s 8 -e 20  (correct substitution errors only, with threshold_value 5 and k_value from 8 to 20)
+	
+	
+Usage: ./miREC.sh [File_Name] [run_type] [threshold_value] [k_1] [k_end] 
+
+	Required OPTIONS:
+	-f [File_Name]: cleaned miRNA sequence dataset （fastq file）
+
+	Optional OPTIONS:
+	-t [threshold_value]: default is 5;
+	-s [k_1]: 10
+	-e [k_end]: 20
+	[run_type]: default is mix, "-o" for substitution errors only;
+	
   
 ## Data format
 Input: A read dataset in fastq format
