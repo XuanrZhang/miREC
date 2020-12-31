@@ -6,7 +6,7 @@ test: miREC.c
 
 $(CC) -fopenmp  miREC_mix_fq.c -o miREC_mix_fq $(CFLAG)
 $(CC) -fopenmp  miREC_fq.c -o miREC_fq $(CFLAG)
-$(CC) -fopenmp miREC.c -o miREC $(CFLAG)
+# $(CC) -fopenmp miREC.c -o miREC $(CFLAG)
 
 # $(CC) find_common.c -o find_common $(CFLAG)
 # $(CC) miREC_subindel.c -o miREC_subindel $(CFLAG)
