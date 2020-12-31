@@ -14,6 +14,7 @@ KMC3 tool, a kmer counter, is used to obtain kmer frequences. Here is the instru
 	cd miREC
 	make
 	chmod +x miREC.sh
+	chmod +x kmc 
 	./miREC.sh -f [File_Name] -s [k_1] -e [k_end] -t [threshold_value] [run_type]
 	e.g 
 	./miREC.sh -f input.fq -t 5 -s 8 -e 20  (correct substitution and indel errors, with threshold_value 5 and k_value from 8 to 20)
