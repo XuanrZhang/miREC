@@ -41,16 +41,81 @@ echo "$F $T $E $S $R";
 if [ $R -eq 1 ]
 then
     echo "running subs error correction only";
+    awk '{if(NR%4!=0)ORS=" ";else ORS="\n"}1' ${F} | awk '{print $1 " " $(NF-2) " " $NF}' > ./id_read.txt;
+    awk '{print $2}' ./id_read.txt |sort |uniq -c| sort -r -nk1 > ./expreLevel_cor.txt   
+    cp ./id_read.txt ./ID_read_quality_cor.txt
+    cp ./ID_read_quality_cor.txt ./ID_read_quality_input.txt
+    cp ${F} ./correct_read.fastq
+    
+    for i in $(seq $S $E )
+    do
+        #----recurring prepare ----: finish error correction, recount 'kmer frequency' and 'read frequency' and 'id_read'
+        #recount 'kmer frequency', then create kmer.freq (e.g. 5mer.freq)
+        ./kmc -k${i} -fq -ci1 ./correct_read.fastq tmp${i} ./
+        ./kmc_dump tmp${i} tmpkc${i}
+        sort -nk2 -r tmpkc${i} > ./${i}mer.freq
+        rm tmp*
+
+        #recount 'read frequency', then create read_expresslevel data ([read_freq] [read])
+        awk '{print $2}' ID_read_quality_cor.txt |sort |uniq -c| sort -r -nk1 > expreLevel_cor.txt
+        echo "----------------------${i} mer frequency preparation ready";
+
+        #error correction
+        #echo "./miREC_fq -k ${i} -m /home/xuanzhan/Data/miRNA/simu/${i}mer.freq -l expreLevel_cor.txt -f ID_read_quality_input.txt >> miREC_subindel${file_id[${j}]}.log;"
+
+        ./miREC_fq -k ${i} -m ./${i}mer.freq -l expreLevel_cor.txt -f ID_read_quality_input.txt >> miREC_subindel${file_id[${j}]}.log;
+
+        cp ID_read_quality_cor.txt ID_read_quality_input.txt 
+        #cp correct_read.fa correct_read_cp.fa
+    done
+    rm ID_read_quality_cor.txt ID_read_quality_input.txt id_read.txt expreLevel_cor.txt
+
 else
     echo "running mix error correction";
+    awk '{if(NR%4!=0)ORS=" ";else ORS="\n"}1' ${F} | awk '{print $1 " " $(NF-2) " " $NF}' > ./id_read.txt;
+    awk '{print $2}' ./id_read.txt |sort |uniq -c| sort -r -nk1 > ./expreLevel_cor.txt   
+    cp ./id_read.txt ./ID_read_quality_cor.txt
+    cp ./ID_read_quality_cor.txt ./ID_read_quality_input.txt
+    cp ${F} ./correct_read.fastq
+    
+    for i in $(seq $S $E )
+    do
+        #----recurring prepare ----: finish error correction, recount 'kmer frequency' and 'read frequency' and 'id_read'
+        #recount 'kmer frequency', then create kmer.freq (e.g. 5mer.freq)
+        ./kmc -k${i} -fq -ci1 ./correct_read.fastq tmp${i} ./
+        ./kmc_dump tmp${i} tmpkc${i}
+        sort -nk2 -r tmpkc${i} > ./${i}mer.freq
+        rm tmp*
+
+        #recount '(k-1)mer frequency', then create kmer.freq (e.g. 5mer.freq)
+        tmpm=$(($i-1))
+        ./kmc -k${tmpm} -fq -ci1 ./correct_read.fastq tmp${tmpm} ./
+        ./kmc_dump tmp${tmpm} tmpkc${tmpm}
+        sort -nk2 -r tmpkc${tmpm} > ./${tmpm}mer.freq
+        rm tmp*
+
+        #recount '(k+1)mer frequency', then create kmer.freq (e.g. 5mer.freq)
+        tmpa=$(($i+1))
+        ./kmc -k${tmpa} -fq -ci1 ./correct_read.fastq tmp${tmpa} ./
+        ./kmc_dump tmp${tmpa} tmpkc${tmpa}
+        sort -nk2 -r tmpkc${tmpa} > ./${tmpa}mer.freq
+        rm tmp*
+
+        #recount 'read frequency', then create read_expresslevel data ([read_freq] [read])
+        awk '{print $2}' ID_read_quality_cor.txt |sort |uniq -c| sort -r -nk1 > expreLevel_cor.txt
+        echo "----------------------${i} mer frequency preparation ready";
+
+        #error correction
+        #echo "./miREC_mix_fq -k ${i} -m /home/xuanzhan/Data/miRNA/simu/${i}mer.freq -s /home/xuanzhan/Data/miRNA/simu/${tmpm}mer.freq -b /home/xuanzhan/Data/miRNA/simu/${tmpa}mer.freq -l expreLevel_cor.txt -f ID_read_quality_input.txt >> miREC_mix${file_id[${j}]}.log;"
+
+        # time ./miREC_fq_update -k ${i} -m /home/xuanzhan/Data/miRNA/simu/${i}mer.freq -l expreLevel_cor.txt -f ID_read_quality_input.txt >> miREC_mix${file_id[${j}]}.log;
+        ./miREC_mix_fq -k ${i} -m ${i}mer.freq -s ${tmpm}mer.freq -b ${tmpa}mer.freq -l expreLevel_cor.txt -f ID_read_quality_input.txt >> miREC_mix${file_id[${j}]}.log;
+
+        echo "----------------------${i} mer correction finished";
+
+        cp ID_read_quality_cor.txt ID_read_quality_input.txt 
+        #cp correct_read.fa correct_read_cp.fa
+    done
+    rm ID_read_quality_cor.txt ID_read_quality_input.txt id_read.txt expreLevel_cor.txt
+    
 fi
-
-
-
------
-	wc -l $2;
-	for i in $(seq $3 $4)
-	do
-	echo “$i”;
-	done
-
