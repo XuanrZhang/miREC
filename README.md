@@ -35,11 +35,11 @@ Usage: ./miREC.sh -f [File_Name] -s [k_1] -e [k_end] -t [threshold_value] [run_t
 ## Data format
 Input: A read dataset in fastq format
 
-	- reads.fq : store the whole read data needed to be corrected.
+	- read.fq : store the whole read data needed to be corrected.
 	
 Output: A corrected read dataset 
 
-	- corrected.fq :store corrected read data.
+	- correct_read.fq :store corrected read data.
 	
 ## Data materials
 
