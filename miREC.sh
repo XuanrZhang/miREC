@@ -68,7 +68,7 @@ then
         cp ID_read_quality_cor.txt ID_read_quality_input.txt 
         #cp correct_read.fa correct_read_cp.fa
     done
-    rm ID_read_quality_cor.txt ID_read_quality_input.txt id_read.txt expreLevel_cor.txt
+    rm *.freq *.txt
 
 else
     echo "running mix error correction";
@@ -116,6 +116,6 @@ else
         cp ID_read_quality_cor.txt ID_read_quality_input.txt 
         #cp correct_read.fa correct_read_cp.fa
     done
-    rm ID_read_quality_cor.txt ID_read_quality_input.txt id_read.txt expreLevel_cor.txt
+    rm *.freq *.txt
     
 fi
