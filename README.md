@@ -5,8 +5,11 @@ The method is particularly effective for the accurate correction of indel errors
 
 Our miREC is a user-friendly tool and suits for different research needs. It provides sev- eral parameters for users to specify according to specific tasks. Three most useful settings are: the error types, the frequency threshold τ, and the kmer range [k_1,k_end]. Our miREC has two running modes. One is for the substitution error correction only, the other is Unlike the exist- ing methods which use a fixed threshold, miREC provides options to obtain a good threshold to identify erroneous kmers, thereby avoiding over-correction or insufficient performance when datasets change.  
 
+The miREC program is written in C++11 and works on Linux. It is availble under an open-source license.
+
 ## Dependancies
 KMC3 tool, a kmer counter, is used to obtain kmer frequences. Here is the instruction of KMC3 (http://sun.aei.polsl.pl/REFRESH/kmc).
+In the script miREC.sh, it uses kmc and kmc_dump. Please make sure the KMC tool can be ran on your machine and store in the current miREC folder.
 
 ## Download & Usage
 
