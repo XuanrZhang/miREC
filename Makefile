@@ -1,11 +1,9 @@
 CC= g++
 CFLAG = -O3 -Wall -std=c++0x
 
-test: miREC.c
-
-
-$(CC) -fopenmp  miREC_mix_fq.c -o miREC_mix_fq $(CFLAG)
-$(CC) -fopenmp  miREC_fq.c -o miREC_fq $(CFLAG)
+test: miREC_fq.c
+	$(CC) -fopenmp  miREC_mix_fq.c -o miREC_mix_fq $(CFLAG)
+	$(CC) -fopenmp  miREC_fq.c -o miREC_fq $(CFLAG)
 # $(CC) -fopenmp miREC.c -o miREC $(CFLAG)
 
 # $(CC) find_common.c -o find_common $(CFLAG)
