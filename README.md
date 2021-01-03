@@ -32,7 +32,7 @@ In the script miREC.sh, it uses kmc and kmc_dump. Please make sure the KMC tool 
 Usage: ./miREC.sh -f [File_Name] -s [k_1] -e [k_end] -t [threshold_value] [run_type]
 
 	Required OPTIONS:
-	-f [File_Name]: cleaned miRNA sequence dataset （fastq file）
+	-f [File_Name]: cleaned miRNA sequence fastq dataset （fastq files）
 
 	Optional OPTIONS:
 	-t [threshold_value]: default is 5;
