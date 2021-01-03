@@ -41,11 +41,12 @@ echo "$F $T $E $S $R";
 if [ $R -eq 1 ]
 then
     echo "running subs error correction only";
-    awk '{if(NR%4!=0)ORS=" ";else ORS="\n"}1' ${F} | awk '{print $1 " " $(NF-2) " " $NF}' > ./id_read.txt;
+    awk '{if((NR%2)==1)print $1;else print $0}' ${F} > input.fq
+    awk '{if(NR%4!=0)ORS=" ";else ORS="\n"}1' input.fq | awk '{print $1 " " $(NF-2) " " $NF}' > ./id_read.txt;
     awk '{print $2}' ./id_read.txt |sort |uniq -c| sort -r -nk1 > ./expreLevel_cor.txt   
     cp ./id_read.txt ./ID_read_quality_cor.txt
     cp ./ID_read_quality_cor.txt ./ID_read_quality_input.txt
-    cp ${F} ./correct_read.fastq
+    cp input.fq ./correct_read.fastq
     
     for i in $(seq $S $E )
     do
@@ -72,11 +73,12 @@ then
 
 else
     echo "running mix error correction";
-    awk '{if(NR%4!=0)ORS=" ";else ORS="\n"}1' ${F} | awk '{print $1 " " $(NF-2) " " $NF}' > ./id_read.txt;
+    awk '{if((NR%2)==1)print $1;else print $0}' ${F} > input.fq
+    awk '{if(NR%4!=0)ORS=" ";else ORS="\n"}1' input.fq | awk '{print $1 " " $(NF-2) " " $NF}' > ./id_read.txt;
     awk '{print $2}' ./id_read.txt |sort |uniq -c| sort -r -nk1 > ./expreLevel_cor.txt   
     cp ./id_read.txt ./ID_read_quality_cor.txt
     cp ./ID_read_quality_cor.txt ./ID_read_quality_input.txt
-    cp ${F} ./correct_read.fastq
+    cp input.fq ./correct_read.fastq
     
     for i in $(seq $S $E )
     do
