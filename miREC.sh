@@ -121,3 +121,5 @@ else
     rm *.freq *.txt
     
 fi
+
+rm input.fq
