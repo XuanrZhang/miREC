@@ -13,6 +13,8 @@ In the script miREC.sh, it uses kmc and kmc_dump. Please make sure the KMC tool 
 
 ## Download & Usage
 
+Download
+
 	git clone https://github.com/XuanrZhang/miREC
 	cd miREC
 	make
@@ -20,7 +22,7 @@ In the script miREC.sh, it uses kmc and kmc_dump. Please make sure the KMC tool 
 	chmod +x kmc* [If you don't install kmc tools] 
 	
 	
-Usage: ./miREC.sh -f [File_Name] -s [k_1] -e [k_end] -t [the number of threads] [run_type]
+Usage: ./miREC.sh -f [Input_File] -s [k_1] -e [k_end] -t [the number of threads] -o [Output_File] -u [run_type]
 
 	Required OPTIONS:
 	-f [File_Name]: cleaned miRNA sequence fastq dataset （fastq files）
