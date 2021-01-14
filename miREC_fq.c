@@ -5,6 +5,8 @@
 #include <vector>
 #include <iostream>
 #include <unistd.h>
+#include "omp.h"
+
 //#include "miREC.h"
 
 using namespace std;
@@ -14,6 +16,7 @@ const int MAX_CHAR_NUM = 1<<20;
 const char* inbase = "ATCG";
 
 unsigned int K_value;
+unsigned int t_FN;
 std::string m_FN;
 std::string l_FN;
 std::string f_FN;
@@ -73,14 +76,16 @@ inline void displayHelp(const char* prog) {
 	printf("\t\t -m is the related k-mer frequency file name\n");
 	printf("\t\t -l is the current read expression-level file name\n");
 	printf("\t\t -f is the raw read info file from fastq\n");
+	printf("\t\t -t is the number of threads\n");
 	
 	printf("Example:\n\t\t");
-	printf("./miREC_update -k 7 -m 7.freq -l 18-25_expreLevel.txt -f ID_read_quality.txt\n\n");
+	printf("./miREC_update -k 7 -t 16  -m 7.freq -l 18-25_expreLevel.txt -f ID_read_quality.txt\n\n");
 }
 
 //show current params
 inline void displayParams() {
 	printf("k_value is k = %d\n", K_value);
+	printf("the number of threads is t = %d\n", t_FN);
 	printf("k-mer frequency file is: %s\n", m_FN.c_str());
 	printf("read expression-level file is: %s\n", l_FN.c_str());
 	printf("raw read info file is: %s\n", f_FN.c_str());
@@ -92,7 +97,7 @@ inline void getPars(int argc, char* argv[]) {
 	//bool is1 = false, is2 = false, is3 = false;
 	//bool iskmer = false; //four
 	int oc;
-	while ((oc = getopt(argc, argv, "k:m:l:f:hf")) >= 0) {
+	while ((oc = getopt(argc, argv, "k:m:l:f:t:hf")) >= 0) {
 		switch (oc) {
 			case 'k':
 				K_value = atoi(optarg);
@@ -110,9 +115,12 @@ inline void getPars(int argc, char* argv[]) {
 				f_FN = optarg;
 				//is3 = true;
 				break;
+			case 't':
+				t_FN = atoi(optarg);
+				break;
 			case 'h':
 				displayHelp(argv[0]);
-				exit(0);
+				exit(0);			
 			case '?':
 				std::cerr << "Error parameters.\n Please run 'miREC -h'\n";
 				exit(1);
@@ -421,7 +429,8 @@ int main(int argc, char *argv[]) {
 	}
 	
 	int schange = 0, nochange = 0;
-	//omp_set_num_threads(10);
+	//cout << "thread number is"<<t_FN<<endl;
+	omp_set_num_threads(t_FN);
 	//For each reads from FASTQ, check if its express low, check k-mer futher
 	#pragma omp parallel for
 	for (unsigned int i = 0; i < F_read.size(); ++i)
@@ -475,7 +484,9 @@ int main(int argc, char *argv[]) {
 		 						if( tmp_readf_a > changeread_setting ){ 						
 
 		 							//cout<<"read_ID : "<<F_id.at(i)<<endl;
-		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]<<endl;
+		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<p
+rocess_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]
+<<endl;
 		 							F_read.at(i).replace(j, K_value, corkmer);
 		 							// readfreqs_change++;
 		 							__sync_fetch_and_add(&schange, 1);
@@ -503,7 +514,9 @@ int main(int argc, char *argv[]) {
 		 						tmp_readf_a = read_expresscheck(check_read);
 		 						if( tmp_readf_a > changeread_setting ){ 
 		 							//cout<<"read_ID : "<<F_id.at(i)<<endl;
-		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]<<endl;
+		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<p
+rocess_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]
+<<endl;
 		 							F_read.at(i).replace(j, K_value,reverse);
 		 							// readfreqs_change++;
 		 							__sync_fetch_and_add(&schange, 1);
@@ -545,8 +558,10 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-	cout<<"改后进入低频，所以为修改的reads数 "<<nochange<<endl;
-	cout<<"总改动的read条数（subs） ： "<<schange<<endl<<endl;
+//	cout<<"改后进入低频，所以为修改的reads数 "<<nochange<<endl;
+//	cout<<"总改动的read条数（subs） ： "<<schange<<endl<<endl;
+//	cout<<"to low frequency region, unconvincing correction "<<nochange<<endl;
+	cout<<"the number of correced subs ： "<<schange<<endl<<endl;
 
 	outfile.close();
 	outlistfile.close();
