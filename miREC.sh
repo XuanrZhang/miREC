@@ -1,42 +1,51 @@
 #!/bin/bash
 
 R=0;
-T=5;
+H=5;
 S=15;
 E=20;
+T=8;
+O=correct_read.fastq;
 
-while getopts f:t:s:e:o op
+while getopts f:o:h:t:s:e:u op
 do 
     case  $op in
         f)
             echo "Input file name is: $OPTARG"
             F=$OPTARG;;
-
-        t)
+        o)
+            echo "Output file name is: $OPTARG"
+            O=$OPTARG;;
+        h)
             echo "Threshod value is: $OPTARG"
-            T=$OPTARG;;
+            H=$OPTARG;;
         s)
             echo "K_1 value is: $OPTARG"
             S=$OPTARG;;
         e)
             echo "K_end value is: $OPTARG"
             E=$OPTARG;;
-        o)
-            echo "correct subs error only"
+        t)
+            echo "The number of threads is: $OPTARG"
+            T=$OPTARG;;
+        u)
+	    echo "correct subs error only"
             R=1;;
         \?)
-            echo "Usage: args [-f] [-s] [-e] [-t] [-o]"
+            echo "Usage: args [-f] [-s] [-e] [-t] [-u] [-o]"
             echo "-f means Input file name "
-            echo "-t means Threshod value"
+            echo "-o means Output file name "
+            echo "-h means Threshod value"
+            echo "-t means the number of threads(Default:8)"
             echo "-s means k_1 value"
             echo "-e means k_end value"
-            echo "-o means run_type is subs error only"
+            echo "-u means run_type is subs error only"
             exit 1;;
     esac
 done
 
 
-echo "$F $T $E $S $R";
+echo "$F $O $T $E $S $R";
 
 if [ $R -eq 1 ]
 then
@@ -53,7 +62,7 @@ then
         #----recurring prepare ----: finish error correction, recount 'kmer frequency' and 'read frequency' and 'id_read'
         #recount 'kmer frequency', then create kmer.freq (e.g. 5mer.freq)
         ./kmc -k${i} -fq -ci1 ./correct_read.fastq tmp${i} ./
-        ./kmc_dump tmp${i} tmpkc${i}
+        ./kmc_dump -t tmp${i} tmpkc${i}
         sort -nk2 -r tmpkc${i} > ./${i}mer.freq
         rm tmp*
 
@@ -62,9 +71,9 @@ then
         echo "----------------------${i} mer frequency preparation ready";
 
         #error correction
-        #echo "./miREC_fq -k ${i} -m /home/xuanzhan/Data/miRNA/simu/${i}mer.freq -l expreLevel_cor.txt -f ID_read_quality_input.txt >> miREC_subindel${file_id[${j}]}.log;"
+        echo "./miREC_fq -k ${i} -m ${i}mer.freq -t ${T} -l expreLevel_cor.txt -f ID_read_quality_input.txt"
 
-        ./miREC_fq -k ${i} -m ./${i}mer.freq -l expreLevel_cor.txt -f ID_read_quality_input.txt >> miREC_subindel${file_id[${j}]}.log;
+        ./miREC_fq -k ${i} -m ./${i}mer.freq -t ${T} -l expreLevel_cor.txt -f ID_read_quality_input.txt;
 
         cp ID_read_quality_cor.txt ID_read_quality_input.txt 
         #cp correct_read.fa correct_read_cp.fa
@@ -84,22 +93,22 @@ else
     do
         #----recurring prepare ----: finish error correction, recount 'kmer frequency' and 'read frequency' and 'id_read'
         #recount 'kmer frequency', then create kmer.freq (e.g. 5mer.freq)
-        ./kmc -k${i} -fq -ci1 ./correct_read.fastq tmp${i} ./
-        ./kmc_dump tmp${i} tmpkc${i}
+        ./kmc -t -k${i} -fq -ci1 ./correct_read.fastq tmp${i} ./
+        ./kmc_dump -t tmp${i} tmpkc${i}
         sort -nk2 -r tmpkc${i} > ./${i}mer.freq
         rm tmp*
 
         #recount '(k-1)mer frequency', then create kmer.freq (e.g. 5mer.freq)
         tmpm=$(($i-1))
-        ./kmc -k${tmpm} -fq -ci1 ./correct_read.fastq tmp${tmpm} ./
-        ./kmc_dump tmp${tmpm} tmpkc${tmpm}
+        ./kmc -t -k${tmpm} -fq -ci1 ./correct_read.fastq tmp${tmpm} ./
+        ./kmc_dump -t tmp${tmpm} tmpkc${tmpm}
         sort -nk2 -r tmpkc${tmpm} > ./${tmpm}mer.freq
         rm tmp*
 
         #recount '(k+1)mer frequency', then create kmer.freq (e.g. 5mer.freq)
         tmpa=$(($i+1))
-        ./kmc -k${tmpa} -fq -ci1 ./correct_read.fastq tmp${tmpa} ./
-        ./kmc_dump tmp${tmpa} tmpkc${tmpa}
+        ./kmc -t -k${tmpa} -fq -ci1 ./correct_read.fastq tmp${tmpa} ./
+        ./kmc_dump -t tmp${tmpa} tmpkc${tmpa}
         sort -nk2 -r tmpkc${tmpa} > ./${tmpa}mer.freq
         rm tmp*
 
@@ -108,10 +117,11 @@ else
         echo "----------------------${i} mer frequency preparation ready";
 
         #error correction
-        #echo "./miREC_mix_fq -k ${i} -m /home/xuanzhan/Data/miRNA/simu/${i}mer.freq -s /home/xuanzhan/Data/miRNA/simu/${tmpm}mer.freq -b /home/xuanzhan/Data/miRNA/simu/${tmpa}mer.freq -l expreLevel_cor.txt -f ID_read_quality_input.txt >> miREC_mix${file_id[${j}]}.log;"
+        echo "./miREC_mix_fq -k ${i} -m ${i}mer.freq -s ${tmpm}mer.freq -b ${tmpa}mer.freq -t ${T} -l expreLevel_cor.txt -f ID_read_quality_input.txt";
 
-        # time ./miREC_fq_update -k ${i} -m /home/xuanzhan/Data/miRNA/simu/${i}mer.freq -l expreLevel_cor.txt -f ID_read_quality_input.txt >> miREC_mix${file_id[${j}]}.log;
-        ./miREC_mix_fq -k ${i} -m ${i}mer.freq -s ${tmpm}mer.freq -b ${tmpa}mer.freq -l expreLevel_cor.txt -f ID_read_quality_input.txt >> miREC_mix${file_id[${j}]}.log;
+        # time ./miREC_fq_update -k ${i} -m /home/xuanzhan/Data/miRNA/simu/${i}mer.freq -l expreLevel_cor.txt -f ID_read_quality_input.txt >> miREC_mix${file_id[${j}]}.log
+;
+        ./miREC_mix_fq -k ${i} -m ${i}mer.freq -s ${tmpm}mer.freq -b ${tmpa}mer.freq -t ${T} -l expreLevel_cor.txt -f ID_read_quality_input.txt;
 
         echo "----------------------${i} mer correction finished";
 
@@ -121,5 +131,10 @@ else
     rm *.freq *.txt
     
 fi
-
 rm input.fq
+
+if [ "${O}" != "correct_read.fastq" ]
+then 
+	cp correct_read.fastq ${O};
+	rm correct_read.fastq
+fi
