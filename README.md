@@ -35,9 +35,10 @@ Usage: ./miREC.sh -f [Input_File] -s [k_1] -e [k_end] -t [the number of threads]
 	[run_type]: default is mix, "-u" for substitution errors only;
 	
 Examples: 
+
 	# test using simulated datasets in github folders.
-	./miREC.sh -f ./Data/simulated_data/mix_data/simumD1.fq -s 10 -e 12 -t 26 (correct substitution and indel errors, with threshold_value 5 and k_value from 10 to 12, with 26 threads)
-	./miREC.sh -f ./Data/simulated_data/mix_data/simumD1.fq -s 10 -e 12 -t 26 -u -o Correct.fastq(correct substitution errors only, with threshold_value 5 and k_value from 10 to 12, with 26 threads; Setting output file name as Correct.fastq)
+	./miREC.sh -f ./Data/simulated_data/mix_data/simumD1.fq -s 15 -e 20 -t 26 (correct substitution and indel errors, with threshold_value 5 and k_value from 10 to 12, with 26 threads)
+	./miREC.sh -f ./Data/simulated_data/mix_data/simumD1.fq -s 15 -e 20 -t 26 -u -o Correct.fastq(correct substitution errors only, with threshold_value 5 and k_value from 10 to 12, with 26 threads; Setting output file name as Correct.fastq)
 	
 	# test user's datasets (user_input.fq)
 	./miREC.sh -f user_input.fq -t 5 -s 8 -e 20 -t 26 (correct substitution and indel errors, with threshold_value 5 and k_value from 8 to 20,with 26 threads)
@@ -65,5 +66,5 @@ We also provide copies in miREC/data file folder.
 ## Citation
 Please cite the work "Aberration-corrected ultrafine analysis of miRNA reads at single-base resolution: better data makes better conclusion."
 
-## Citation
+## Question
 If any bugs during your running, please email to xuan.zhang-5@student.uts.edu.au
