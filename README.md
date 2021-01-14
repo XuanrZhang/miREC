@@ -18,31 +18,32 @@ In the script miREC.sh, it uses kmc and kmc_dump. Please make sure the KMC tool 
 	make
 	chmod +x miREC.sh
 	chmod +x kmc* [If you don't install kmc tools] 
-	./miREC.sh -f [File_Name] -s [k_1] -e [k_end] -t [threshold_value] [run_type]
-	
-	e.g 
-	
-	#test using simulated datasets in github folders.
-	./miREC.sh -f ./Data/simulated_data/mix_data/simumD1.fq -s 10 -e 12 (correct substitution and indel errors, with threshold_value 5 and k_value from 10 to 12)
-	# test user's datasets (user_input.fq)
-	./miREC.sh -f user_input.fq -t 5 -s 8 -e 20  (correct substitution and indel errors, with threshold_value 5 and k_value from 8 to 20)
-	./miREC.sh -f user_input.fq -t 5 -s 8 -e 20  (correct substitution errors only, with threshold_value 5 and k_value from 8 to 20)
 	
 	
-Usage: ./miREC.sh -f [File_Name] -s [k_1] -e [k_end] -t [threshold_value] [run_type]
+Usage: ./miREC.sh -f [File_Name] -s [k_1] -e [k_end] -t [the number of threads] [run_type]
 
 	Required OPTIONS:
 	-f [File_Name]: cleaned miRNA sequence fastq dataset （fastq files）
 
 	Optional OPTIONS:
-	-t [threshold_value]: default is 5;
-	-s [k_1]: 10
-	-e [k_end]: 20
-	[run_type]: default is mix, "-o" for substitution errors only;
+	-t [the number of threads]: default is 8;
+	-s [k_1]: 15;
+	-e [k_end]: 20;
+	-o [Ouput_FileName]: default is correct_read.fastq;
+	[run_type]: default is mix, "-u" for substitution errors only;
+	
+Examples: 
+	# test using simulated datasets in github folders.
+	./miREC.sh -f ./Data/simulated_data/mix_data/simumD1.fq -s 10 -e 12 -t 26 (correct substitution and indel errors, with threshold_value 5 and k_value from 10 to 12, with 26 threads)
+	./miREC.sh -f ./Data/simulated_data/mix_data/simumD1.fq -s 10 -e 12 -t 26 -u -o Correct.fastq(correct substitution errors only, with threshold_value 5 and k_value from 10 to 12, with 26 threads; Setting output file name as Correct.fastq)
+	
+	# test user's datasets (user_input.fq)
+	./miREC.sh -f user_input.fq -t 5 -s 8 -e 20 -t 26 (correct substitution and indel errors, with threshold_value 5 and k_value from 8 to 20,with 26 threads)
+	./miREC.sh -f user_input.fq -t 5 -s 8 -e 20 -u  -t 26 (correct substitution errors only, with threshold_value 5 and k_value from 8 to 20,with 26 threads)
 	
   
 ## Data format
-Input: A read dataset in fastq format
+Input: A clean miRNA read dataset in fastq format(After adapter cutting)
 
 	- read.fq : store the whole read data needed to be corrected.
 	
