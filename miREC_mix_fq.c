@@ -5,6 +5,7 @@
 #include <vector>
 #include <iostream>
 #include <unistd.h>
+#include "omp.h"
 //#include "miREC.h"
 
 using namespace std;
@@ -14,6 +15,7 @@ const int MAX_CHAR_NUM = 1<<20;
 const char* inbase = "ATCG";
 
 unsigned int K_value;
+unsigned int t_FN = 4;
 std::string m_FN;
 std::string ma_FN;
 std::string mm_FN;
@@ -70,15 +72,17 @@ inline void displayHelp(const char* prog) {
 	printf("\t\t -s is the related k-1 mer frequency file name\n");
 	printf("\t\t -b is the related k+1 mer frequency file name\n");
 	printf("\t\t -l is the current read expression-level file name\n");
+	printf("\t\t -t is the number of threads\n");
 	printf("\t\t -f is the raw read info file from fastq\n");
 	
 	printf("Example:\n\t\t");
-	printf("./miREC_update -k 7 -m 7.freq -l 18-25_expreLevel.txt -f ID_read_quality.txt\n\n");
+	printf("./miREC_update -k 7 -t 10  -m 7.freq -l 18-25_expreLevel.txt -f ID_read_quality.txt\n\n");
 }
 
 //show current params
 inline void displayParams() {
 	printf("k_value is k = %d\n", K_value);
+	printf("the number of threads is t = %d\n", t_FN);
 	printf("k-mer frequency file is: %s\n", m_FN.c_str());
 	printf("k+1mer frequency file is: %s\n", ma_FN.c_str());
 	printf("k-1mer frequency file is: %s\n", mm_FN.c_str());
@@ -92,7 +96,7 @@ inline void getPars(int argc, char* argv[]) {
 	//bool is1 = false, is2 = false, is3 = false;
 	//bool iskmer = false; //four
 	int oc;
-	while ((oc = getopt(argc, argv, "k:m:s:b:l:f:hf")) >= 0) {
+	while ((oc = getopt(argc, argv, "k:t:m:s:b:l:f:hf")) >= 0) {
 		switch (oc) {
 			case 'k':
 				K_value = atoi(optarg);
@@ -105,6 +109,9 @@ inline void getPars(int argc, char* argv[]) {
 			case 's':
 				mm_FN = optarg;
 				//is1 = true;
+				break;
+			case 't':
+				t_FN = atoi(optarg);
 				break;
 			case 'b':
 				ma_FN = optarg;
@@ -517,7 +524,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	int schange = 0, mchange = 0 , achange = 0, nochange = 0;
-
+	omp_set_num_threads(t_FN);
 	//For each reads from FASTQ, check if its express once, check k-mer futher
 	// cout<<"F_read.size(): "<<F_read.size() <<endl;
 	#pragma omp parallel for
@@ -572,7 +579,9 @@ int main(int argc, char *argv[]) {
 		 						if(read_expresscheck(check_read) > changeread_setting ){ 						
 
 		 							//cout<<"read_ID : "<<F_id.at(i)<<endl;
-		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]<<endl;
+		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<p
+rocess_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]
+<<endl;
 		 							F_read.at(i).replace(j, K_value, corkmer);
 		 							// readfreqs_change++;
 		 							__sync_fetch_and_add(&schange, 1);
@@ -598,7 +607,9 @@ int main(int argc, char *argv[]) {
 		 						
 		 						if(read_expresscheck(check_read) > changeread_setting ){
 		 							//cout<<"read_ID : "<<F_id.at(i)<<endl;
-		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]<<endl;
+		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<p
+rocess_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]
+<<endl;
 		 							F_read.at(i).replace(j, K_value,reverse);
 		 							// readfreqs_change++;
 		 							__sync_fetch_and_add(&schange, 1);
@@ -633,7 +644,9 @@ int main(int argc, char *argv[]) {
 		 						if(read_expresscheck(check_read) > changeread_setting ){ 						
 
 		 							//cout<<"read_ID : "<<F_id.at(i)<<endl;
-		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]<<endl;
+		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<p
+rocess_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]
+<<endl;
 		 							F_read.at(i).replace(j, K_value, corkmer);
 		 							__sync_fetch_and_add(&achange, 1);
 		 							//cout<<"read : "<<F_read.at(i)<<endl;
@@ -658,7 +671,9 @@ int main(int argc, char *argv[]) {
 		 						
 		 						if(read_expresscheck(check_read) > changeread_setting ){
 		 							//cout<<"read_ID : "<<F_id.at(i)<<endl;
-		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]<<endl;
+		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<p
+rocess_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]
+<<endl;
 		 							F_read.at(i).replace(j, K_value,reverse);
 		 							__sync_fetch_and_add(&achange, 1);
 		 							//cout<<"read : "<<F_read.at(i)<<endl;
@@ -692,7 +707,9 @@ int main(int argc, char *argv[]) {
 		 						if(read_expresscheck(check_read) > changeread_setting ){ 						
 
 		 							//cout<<"read_ID : "<<F_id.at(i)<<endl;
-		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]<<endl;
+		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<p
+rocess_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]
+<<endl;
 		 							F_read.at(i).replace(j, K_value, corkmer);
 		 							__sync_fetch_and_add(&mchange, 1);
 		 							//cout<<"read : "<<F_read.at(i)<<endl;
@@ -717,7 +734,9 @@ int main(int argc, char *argv[]) {
 		 						
 		 						if(read_expresscheck(check_read) > changeread_setting ){
 		 							//cout<<"read_ID : "<<F_id.at(i)<<endl;
-		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]<<endl;
+		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<p
+rocess_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]
+<<endl;
 		 							F_read.at(i).replace(j, K_value,reverse);
 		 							__sync_fetch_and_add(&mchange, 1);
 		 							//cout<<"read : "<<F_read.at(i)<<endl;
@@ -757,10 +776,15 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-	cout<<"改后进入低频，所以为修改的reads数 "<<nochange<<endl;
-	cout<<"总改动的read条数（subs） ： "<<schange<<endl<<endl;
-	cout<<"总改动的read条数（deletion） ： "<<achange<<endl<<endl;
-	cout<<"总改动的read条数（insertion） ： "<<mchange<<endl<<endl;
+	//cout<<"改后进入低频，所以为修改的reads数 "<<nochange<<endl;
+	//cout<<"总改动的read条数（subs） ： "<<schange<<endl<<endl;
+	//cout<<"总改动的read条数（deletion） ： "<<achange<<endl<<endl;
+	//cout<<"总改动的read条数（insertion） ： "<<mchange<<endl<<endl;
+
+	//cout<<"Unconvincing correction "<<nochange<<endl;
+	cout<<"the number of corrected subs  ： "<<schange<<endl;
+	cout<<"the number of corrected deletion  ： "<<achange<<endl;
+	cout<<"the number of corrected insertion  ： "<<mchange<<endl;
 
 	outfile.close();
 	outlistfile.close();
