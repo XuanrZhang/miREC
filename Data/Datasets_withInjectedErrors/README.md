@@ -10,17 +10,17 @@ The 8 fastq files are accessed at the google drive link (https://drive.google.co
 
 The file's name are lised below.
 
-witherr_30_1.fq.gz             
-witherr_30_2.fq.gz 
+witherr_30_1.fq.gz   
+witherr_30_2.fq.gz   
 
-witherr_573_2.fq.gz
-witherr_573_3.fq.gz
+witherr_573_2.fq.gz  
+witherr_573_3.fq.gz  
 
-witherr_587_1.fq.gz
-witherr_587_2.fq.gz
+witherr_587_1.fq.gz  
+witherr_587_2.fq.gz  
 
-witherr_605_1.fq.gz
-witherr_605_2.fq.gz
+witherr_605_1.fq.gz  
+witherr_605_2.fq.gz  
 
 We also display injected error details, and correction evaluation.
 
