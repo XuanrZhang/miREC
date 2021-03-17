@@ -346,9 +346,9 @@ Only 8 geninue errors are corrected successfully.
 @SRR866605.3099549 680 CAGTGCAATAGTATTGTCAAAGC CAGTGCAATAGTATTGGCAAAGC 16  G   
 @SRR866605.3148546 7562 AACATTCAACGCTGTCGGTGA AATATTCAACGCTGTCGGTGA 2  T   
 
---------after miREC error correction-----
-Total 35 geninue errors are corrected successfully.
-We also list remaining 24 reads, which is not supposed to be corrected. Since after error injection, the reads belong to miRNA group with higher copy number.
+--------after miREC error correction-----  
+Total 35 geninue errors are corrected successfully.  
+We also list remaining 24 reads, which is not supposed to be corrected. Since after error injection, the reads belong to miRNA group with higher copy number.  
 @SRR866605.185412 original read: TTCAAGTAATCCAGGATAGGCT  uncorrected read: TTCAAGTAATCCAGGTTAGGCT (27)   
 @SRR866605.263905 original read: ATCACATTGCCAGGGATTACCACT  uncorrected read: ATCACATTGCCAGGGATTACCT (13)   
 @SRR866605.319834 original read: TTTGGTCCCCTTCAACCAGCTG  uncorrected read: TTTGGTCCCCTTCAACCAGCTGT (26516)   
@@ -375,8 +375,8 @@ We also list remaining 24 reads, which is not supposed to be corrected. Since af
 @SRR866605.2914182 original read: TTCACAGTGGCTAAGTTCTGC  uncorrected read: TTCACAGTGGTTAAGTTCTGC (6960)   
 
 
---------Compared with the second best method (Karect) correction-----  
-Only 8 geninue errors are corrected successfully.  
+--------Compared with the second best method (Karect) correction-----   
+Only 8 geninue errors are corrected successfully.   
 @SRR866605.35324 original read: AACATTCAACGCTGTCGGTGAG  uncorrected read: AACATTCAAGGCTGTCGGTGAG   
 @SRR866605.57068 original read: TTAAGACTTGTAGTGATGTTTA  uncorrected read: TTAGACTTGTAGTGATGTTTA   
 @SRR866605.185412 original read: TTCAAGTAATCCAGGATAGGCT  uncorrected read: TTCAAGTAATCCAGGTTAGGCT   
@@ -433,7 +433,7 @@ Only 8 geninue errors are corrected successfully.
 
 3_1:error details: sub: 38 ins: 4 del: 4  
 
------------injected error details in list----------  
+-----------injected error details in list----------    
 --[read_ID] [copynumber_of_originalread] [original_read] [read_with_injectederror] [error_position] [err_type ("-":deletion; '+':insertion)] [error_base]------  
 @SRR866587.47979 32468 TTCAAGTAATCCAGGATAGGCT TTCAAGTAAGCCAGGATAGGCT 9  G   
 @SRR866587.63206 121 TGAGGCGTTTAGAACAAGTTCA TGAGGCGTTTATAACAAGTTCA 11  T   
@@ -484,7 +484,7 @@ Only 8 geninue errors are corrected successfully.
 
 --------after miREC error correction-----  
 Total 26 geninue errors are corrected successfully.  
-We also list remaining 20 reads, which is not supposed to be corrected. Since after error injection, the reads belong to miRNA group with higher copy number.
+We also list remaining 20 reads, which is not supposed to be corrected. Since after error injection, the reads belong to miRNA group with higher copy number.  
 @SRR866587.63897 original read: CACCCTGTAGAACCGAATTTGT  uncorrected read: CAACCTGTAGAACCGAATTTGT (6)   
 @SRR866587.123024 original read: TAACGGAACCCATAATGCAGCTG  uncorrected read: GAACGGAACCCATAATGCAGCTG (194)   
 @SRR866587.219566 original read: TGAGATGAAGCACTGTAGCTC  uncorrected read: TGAGATGAAGCACAGTAGCTC (8)   
