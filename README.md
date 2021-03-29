@@ -8,8 +8,12 @@ Our miREC is a user-friendly tool and suits for different research needs. It pro
 The miREC program is written in C++11 and tested on Red Hat Enterprise Linux Workstation release 7.7. It is availble under an open-source license.
 
 ## Dependancies
-KMC3 tool, a kmer counter, is used to obtain kmer frequences. Here is the instruction of KMC3 (http://sun.aei.polsl.pl/REFRESH/kmc).
+**KMC3 tool**, a kmer counter, is used to obtain kmer frequences. Here is the instruction of KMC3 (http://sun.aei.polsl.pl/REFRESH/kmc).
 In the script miREC.sh, it uses kmc and kmc_dump. Please make sure the KMC tool can be ran on your machine and store in the current miREC folder.
+
+**Cutadapt tool**, Cutadapt finds and removes adapter sequences, primers, poly-A tails and other types of unwanted sequence from your high-throughput sequencing reads.(https://cutadapt.readthedocs.io/en/stable/)
+The miREC uses cutadapt. Please make sure the cutadapt tool can be ran on your machine and store in the current miREC folder.
+
 
 ## Download & Usage
 
@@ -29,21 +33,27 @@ Usage: ./miREC.sh -f [Input_File] -s [k_1] -e [k_end] -t [the number of threads]
 
 	Optional OPTIONS:
 	-t [the number of threads]: default is 8;
-	-s [k_1]: 15;
-	-e [k_end]: 18;
+	-s [k_1]: 8;
+	-e [k_end]: 15;
 	-o [Ouput_FileName]: default is correct_read.fastq;
 	[run_type]: default is mix, "-u" for substitution errors only;
+	[cut_adapter]: " -c" to open cutadatper function, use by -c [adapter sequence] (e.g. -c GCCTTGGCACCCGAGAATTCCA);
 	
 Examples: 
 
 	# test using simulated datasets in github folders.
-	./miREC.sh -f ./Data/simulated_data/mix_data/simumD1.fq -s 10 -e 12 -t 26 (correct substitution and indel errors, with threshold_value 5 and k_value from 10 to 12, with 26 threads)
-	./miREC.sh -f ./Data/simulated_data/mix_data/simumD1.fq -s 15 -e 18 -t 26 -u -o Correct.fastq(correct substitution errors only, with threshold_value 5 and k_value from 10 to 12, with 26 threads; Setting output file name as Correct.fastq)
+	./miREC.sh -f ./Data/simulated_data/mix_data/simumD1.fq -s 8 -e 15 -t 26 (correct substitution and indel errors, with threshold_value 5 and k_value from 8 to 15, with 26 threads)
+	./miREC.sh -f ./Data/simulated_data/mix_data/simumD1.fq -s 8 -e 15 -t 26 -c TGGAATTCTCGGGTGCCAAGG (cutadapter with sequence "TGGAATTCTCGGGTGCCAAGG" and then correct substitution and indel errors, with threshold_value 5 and k_value from 8 to 15, with 26 threads)
+	./miREC.sh -f ./Data/simulated_data/mix_data/simumD1.fq -s 8 -e 15 -t 26 -u -o Correct.fastq(correct substitution errors only, with threshold_value 5 and k_value from 8 to 15, with 26 threads; Setting output file name as Correct.fastq)
 	
 	# test user's datasets (user_input.fq)
-	./miREC.sh -f user_input.fq -s 8 -e 20 -t 26 (correct substitution and indel errors, with threshold_value 5 and k_value from 8 to 20,with 26 threads)
-	./miREC.sh -f user_input.fq -s 8 -e 20 -u  -t 26 (correct substitution errors only, with threshold_value 5 and k_value from 8 to 20,with 26 threads)
-	
+	./miREC.sh -f user_input.fq -s 8 -e 15 -t 26 (correct substitution and indel errors, with threshold_value 5 and k_value from 8 to 15,with 26 threads)
+	./miREC.sh -f user_input.fq -s 8 -e 15 -u  -t 26 (correct substitution errors only, with threshold_value 5 and k_value from 8 to 15,with 26 threads)
+
+**Tips for kvalue selection**:
+
+	**The kmer range parameter is recommanded as [8,15].**
+	Every iterative step of miREC with the increasing length of kmer each time by 1 in the range [k1 , kend ] actually corrects different amounts of errors. According to experiments, after five consecutive lengths of k are iterated, about 99.61% of substitution errors, 88.77% of insertion errors and 94.63% of deletion errors can be corrected if k1 is set as 8. With more loops of correction, more erroneous bases are detected and corrected. As each iterative loop consumes the same order of time complexity, users are suggested to narrow the kmer range (by setting kend smaller) to shorten the program running time while correcting almost all of the errors for those miRNA sequencing datasets of huge size.
   
 ## Data format
 Input: A clean miRNA read dataset in fastq format(After adapter cutting)
