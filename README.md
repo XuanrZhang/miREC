@@ -29,7 +29,7 @@ Download
 Usage: ./miREC.sh -f [Input_File] -s [k_1] -e [k_end] -t [the number of threads] -o [Output_File] -u [run_type]
 
 	Required OPTIONS:
-	-f [File_Name]: cleaned miRNA sequence fastq dataset （fastq files）
+	-f [File_Name]: miRNA sequence fastq dataset（fastq files）
 
 	Optional OPTIONS:
 	-t [the number of threads]: default is 8;
