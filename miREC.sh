@@ -5,9 +5,10 @@ H=5;
 S=15;
 E=20;
 T=8;
+cut=0;
 O=correct_read.fastq;
 
-while getopts f:o:h:t:s:e:u:c op
+while getopts f:o:h:t:s:e:c:u op
 do 
     case $op in
         f)
@@ -30,8 +31,8 @@ do
             T=$OPTARG;;
         c)
             echo "start cutadapter with adapter seq: $OPTARG"
+            cut=1;
             C=$OPTARG;;
-	    cut=1;
         u)
 	    echo "correct subs error only"
             R=1;;
@@ -43,25 +44,24 @@ do
             echo "-t means the number of threads(Default:8)"
             echo "-s means k_1 value"
             echo "-e means k_end value"
-	    echo "-c" means open cutadapter step with adapter sequence"
-            echo "-u" means run_type is subs error only"
+	    echo "-c means open cutadapter step with adapter sequence"
+            echo "-u means run_type is subs error only"
             exit 1;;
     esac
 done
 
 
-echo "$F $O $T $E $S $R";
-
-
 if [ ${cut} -eq 1 ]
 then
+    echo "start cutadapter  ----";
+    echo "./cutadapt -j 0 -b ${C} -o cut.fq ${F}";
     ./cutadapt -j 0 -b ${C} -o cut.fq ${F};
-    echo "cutadapter finished";
+    echo "cutadapter finished ----";
+    awk '{if((NR%2)==1)print $1;else print $0}' cut.fq > input.fq
 else
-    cp  ${F} cut.fq;
+    awk '{if((NR%2)==1)print $1;else print $0}' ${F} > input.fq
 fi
 
-awk '{if((NR%2)==1)print $1;else print $0}' cut.fq > input.fq
 
 if [ $R -eq 1 ]
 then
@@ -145,7 +145,6 @@ else
 
 fi
 rm input.fq
-rm cut.fq
 
 if [ "${O}" != "correct_read.fastq" ]
 then 
