@@ -2,8 +2,8 @@
 
 R=0;
 H=5;
-S=15;
-E=20;
+S=8;
+E=15;
 T=8;
 cut=0;
 O=correct_read.fastq;
