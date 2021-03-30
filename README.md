@@ -24,6 +24,7 @@ Download
 	make
 	chmod +x miREC.sh
 	chmod +x kmc* [If you don't install kmc tools] 
+	chmod +x cutadapt [If you don't install cutadapt tools]
 	
 	
 Usage: ./miREC.sh -f [Input_File] -s [k_1] -e [k_end] -t [the number of threads] -o [Output_File] -u [run_type]
