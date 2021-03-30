@@ -373,7 +373,7 @@ int low_kmercheck(string read){
     	}	
     }
    // cout<<"ERROR : kmer are not in mer_freq file."<<endl;
-	return 0;
+	return 1;
 }
 
 //find candidate correct kmer
@@ -539,7 +539,7 @@ int main(int argc, char *argv[]) {
  			read_len=F_read.at(i).size();
 
  			//for each k-mer in the read
- 			if (read_len > K_value)
+ 			if (read_len >= K_value)
  			{
 				//check each kmer in a read
 	 			string check_read;
