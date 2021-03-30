@@ -12,20 +12,35 @@ For users' convenience, users can use their own sequence templates and copy numb
 # Make and Usage
 
 cd miREC/Generat_SimulatedData/
+
 make
+
 chmod +x gene_simu.sh
 
 
 ## example
 
+Input files: 
 
-./gene_simu_sub -c /home/xuanzhan/Data/miRNA/salmon/cleandata/read_explevel_573.txt -f /home/xuanzhan/Data/miRNA/ref/mature.fa -o simuD1.fa -g simuD1_ture.fa
-
-Input files:
+- "-d" : distrubution file: ID and sequence (default "distrubution.txt")
+- "-f" : sequence templates: fasta file (default "mature.fa")
 
 Output files:
 
-- simulated dataset（reads with errors）
-- the groud-truth of simulated dataset
-- err.txt (error profiles)
+-  "-o" : simulated dataset, reads with errors (default "simulated.fa")
+-  "-g" : the groud-truth of simulated dataset  (default "truth.fa")
+- error profiles: (default "err.txt")
+
+Optional parameter:
+
+- "-t" : generate datasets with subs errors only (don't use -t, generate datasets with mixed errors)
+- "-s" : random seed number (setting different seed number to obtain different datasets)
+
+**Usage**
+
+./gene_simu.sh -s 1 -d ./distrubution.txt -f ./mature.fa -t (generate datasets with subs errors only)
+
+./gene_simu.sh -s 1 -d ./distrubution.txt -f ./mature.fa (generate datasets with mixed errors only)
+
+
 
