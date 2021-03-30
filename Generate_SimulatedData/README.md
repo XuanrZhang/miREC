@@ -20,3 +20,12 @@ chmod +x gene_simu.sh
 
 
 ./gene_simu_sub -c /home/xuanzhan/Data/miRNA/salmon/cleandata/read_explevel_573.txt -f /home/xuanzhan/Data/miRNA/ref/mature.fa -o simuD1.fa -g simuD1_ture.fa
+
+Input files:
+
+Output files:
+
+- simulated dataset（reads with errors）
+- the groud-truth of simulated dataset
+- err.txt (error profiles)
+
