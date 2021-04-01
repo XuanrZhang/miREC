@@ -4,11 +4,9 @@ For following raw sequencing datasets, we injected errors twice, and labled data
 
 We selected 3 salmon miRNA datasets (from liver tissue,SRR866573; from spleen tissue,SRR866587; from heart tissue,SRR866605 ) and 1 human miRNA dataset (from aged 75 male samples).
 
- 
-
 The 8 fastq files are accessed at the google drive link (https://drive.google.com/file/d/1LltNg2SPXZ09qYztM30aAfnPfda1dSGD/view?usp=sharing).
 
-The file's name are lised below.
+The injected_error file's name are lised below, you can also use our provided code to generated these files. (code link: https://github.com/XuanrZhang/miREC/tree/main/Inject_ErrorOnRawData)
 
 witherr_30_1.fq.gz   
 witherr_30_2.fq.gz   
@@ -709,4 +707,4 @@ Only 20 geninue errors are corrected successfully.
 
 
 For the SRR12881030 data, there are too much injected errors to list here.  
-You can get the injected error list by using our error injection code.  
+You can get the injected error list by using our error injection code (https://github.com/XuanrZhang/miREC/tree/main/Inject_ErrorOnRawData).  
