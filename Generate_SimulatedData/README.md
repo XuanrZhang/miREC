@@ -12,7 +12,7 @@ For users' convenience, users can use their own sequence templates and copy numb
 
 # Make and Usage
 
-cd miREC/Generat_SimulatedData/
+cd miREC/Generate_SimulatedData/
 
 make
 
