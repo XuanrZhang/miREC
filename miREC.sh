@@ -8,7 +8,7 @@ T=8;
 cut=0;
 O=correct_read.fastq;
 
-while getopts f:o:h:t:s:e:c:u op
+while getopts f:o:h:t:s:e:c:u: op
 do 
     case $op in
         f)
