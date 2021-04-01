@@ -10,17 +10,26 @@ cd miREC/Inject_ErrorOnRawData/
 
 make
 
-chmod +x inject_error.sh
+chmod +x inject_errr.sh
 
 
 ## example
 
 Input files: 
 
-- "-f" : sequence dataset provided (default "distrubution.txt")
+- "-f" : sequence dataset fastq file provided 
 
 Output files:
 
--  "-o" : simulated dataset, reads with errors (default "simulated.fa")
--  "-g" : the groud-truth of simulated dataset  (default "truth.fa")
-- error profiles: (default "err.txt")
+-  "-o" : simulated dataset, reads with errors (default "output.fq")
+-  error profiles: "err_list.txt"
+
+Optional parameter:
+
+- "-s" : random seed number
+
+**usage**
+
+./inject_err.sh -f input.fq (generate injected_errors dataset "output.fq" and error profile in "err_list.txt" with default seed (1) )
+
+./inject_err.sh -f input.fq  -s 2 -o witherr.fq (generate injected_errors dataset "witherr.fq" and error profile in "err_list.txt" with seed (2) )
