@@ -32,4 +32,6 @@ Optional parameter:
 
 ./inject_err.sh -f input.fq (generate injected_errors dataset "output.fq" and error profile in "err_list.txt" with default seed (1) )
 
+./inject_err.sh -f input.fq -s 3 (generate injected_errors dataset "output.fq" and error profile in "err_list.txt" with default seed (3) )
+
 ./inject_err.sh -f input.fq  -s 2 -o witherr.fq (generate injected_errors dataset "witherr.fq" and error profile in "err_list.txt" with seed (2) )
