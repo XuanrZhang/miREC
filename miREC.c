@@ -367,8 +367,7 @@ string find_cankmer(string mer){
 				 		{
 				 			tmp_freq = kmerfreq[hash_index][i].freq;
 				 			tmp_cor = kmer_cor;
-				 		// 	//info illustrate: position(in kmer)-correct_to-freq(cor_kmer)
-				 		// 	info = to_string(tmp_freq) + "," + to_string(i) + "," + to_string(j) ;
+
 				 		}
 				 	}	    			
 			    }
@@ -401,7 +400,7 @@ int main(int argc, char *argv[]) {
 
 	//write correct reads
 	if(!outfile){
-    cout << "Unable to open otfile";
+   	cout << "Unable to open otfile";
         exit(1); // terminate with error
 
 	}
@@ -414,7 +413,6 @@ int main(int argc, char *argv[]) {
 	{
 		string tmp,mer,small,reverse;
 		unsigned int read_len=0;
-		//cout<<F_id.at(i)<<"  "<<F_read.at(i)<<endl;
 		if(read_expresscheck(F_read.at(i)) < errread_setting)
 		{
  			//this read exist errors and need to be corrected	
@@ -446,24 +444,20 @@ int main(int argc, char *argv[]) {
 						corkmer = find_cankmer(small);
 						if ( corkmer != "Nofound" )
 						{
-							//替换
 		 					//start correction
 		 					if(Flag ==0)
 		 					{
 		 						check_read = tmp;
 		 						check_read.replace(j, K_value, corkmer);
 
-		 						//cout<<"改的base位于read的第 "<<j+Cor_info[it-Err_Kmer.begin()][1]+1<<endl;
 		 						//check freq of revised read
 
 		 						if(read_expresscheck(check_read) > changeread_setting ){ 						
 
-		 							//cout<<"read_ID : "<<F_id.at(i)<<endl;
-		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]<<endl;
-		 							F_read.at(i).replace(j, K_value, corkmer);
+									F_read.at(i).replace(j, K_value, corkmer);
 		 							// readfreqs_change++;
 		 							__sync_fetch_and_add(&schange, 1);
-		 							//cout<<"read : "<<F_read.at(i)<<endl;
+
 
 		 							F_flag.at(i) = 1;
 		 							continue;
@@ -480,11 +474,8 @@ int main(int argc, char *argv[]) {
 		 						check_read = tmp;
 		 						reverse = rever_comp(corkmer);
 		 						check_read.replace(j, K_value,reverse);
-		 						//cout<<"改后的链"<<F_read.at(i)<<endl;
 		 						
 		 						if(read_expresscheck(check_read) > changeread_setting ){
-		 							//cout<<"read_ID : "<<F_id.at(i)<<endl;
-		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]<<endl;
 		 							F_read.at(i).replace(j, K_value,reverse);
 		 							// readfreqs_change++;
 		 							__sync_fetch_and_add(&schange, 1);
@@ -522,9 +513,8 @@ int main(int argc, char *argv[]) {
 			correctedfile<<F_id.at(i)<<" "<<F_read.at(i)<<endl;
 		}
 	}
-
-	cout<<"改后进入低频，所以为修改的reads数 "<<nochange<<endl;
-	cout<<"总改动的read条数（subs） ： "<<schange<<endl<<endl;
+	
+	cout<<"the number of corrected subs : "<<schange<<endl<<endl;
 
 	outfile.close();
 	outlistfile.close();
