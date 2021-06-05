@@ -426,7 +426,7 @@ string find_cankmera(string mer){
 	string small;
 
 
-	for(unsigned int i=0; i<mer.size(); i++)
+	for(unsigned int i=0; i<=mer.size(); i++)
 	{	
 		//cout<<kmer_cor<<" "<<i<<" "<<mer[i]<<endl;
 		for(int j=0; j<4; j++)
@@ -642,6 +642,7 @@ int main(int argc, char *argv[]) {
 		 							//cout<<"read_ID : "<<F_id.at(i)<<endl;
 		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]<<endl;
 		 							F_read.at(i).replace(j, K_value, corkmer);
+		 							F_quality.at(i).insert(0,1,F_quality.at(i)[1]);
 		 							__sync_fetch_and_add(&achange, 1);
 		 							//cout<<"read : "<<F_read.at(i)<<endl;
 
@@ -664,9 +665,8 @@ int main(int argc, char *argv[]) {
 		 						//cout<<"改后的链"<<F_read.at(i)<<endl;
 		 						
 		 						if(read_expresscheck(check_read) > changeread_setting ){
-		 							//cout<<"read_ID : "<<F_id.at(i)<<endl;
-		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]<<endl;
 		 							F_read.at(i).replace(j, K_value,reverse);
+		 							F_quality.at(i).insert(0,1,F_quality.at(i)[1]);
 		 							__sync_fetch_and_add(&achange, 1);
 		 							//cout<<"read : "<<F_read.at(i)<<endl;
 
@@ -698,9 +698,8 @@ int main(int argc, char *argv[]) {
 
 		 						if(read_expresscheck(check_read) > changeread_setting ){ 						
 
-		 							//cout<<"read_ID : "<<F_id.at(i)<<endl;
-		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]<<endl;
 		 							F_read.at(i).replace(j, K_value, corkmer);
+		 							F_quality.at(i).erase(0,1);
 		 							__sync_fetch_and_add(&mchange, 1);
 		 							//cout<<"read : "<<F_read.at(i)<<endl;
 
@@ -714,7 +713,7 @@ int main(int argc, char *argv[]) {
 		 						}	
 		 
 		 					}
-		 					else//反链修改
+		 					else
 		 					{
 
 		 						check_read = tmp;
@@ -723,9 +722,8 @@ int main(int argc, char *argv[]) {
 		 						//cout<<"改后的链"<<F_read.at(i)<<endl;
 		 						
 		 						if(read_expresscheck(check_read) > changeread_setting ){
-		 							//cout<<"read_ID : "<<F_id.at(i)<<endl;
-		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]<<endl;
 		 							F_read.at(i).replace(j, K_value,reverse);
+		 							F_quality.at(i).erase(0,1);
 		 							__sync_fetch_and_add(&mchange, 1);
 		 							//cout<<"read : "<<F_read.at(i)<<endl;
 		 							F_flag.at(i) = 1;
@@ -740,7 +738,7 @@ int main(int argc, char *argv[]) {
 		 					}
 						}
 
-						if( check_twice >= 2){cout<<"------------!!!!!一个kmer修改了两次！！！！-----------------";}
+						// if( check_twice >= 2){cout<<"------------a kmer changed twice-----------------";}
 
 					}
 				}
@@ -764,10 +762,6 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-	//cout<<"改后进入低频，所以为修改的reads数 "<<nochange<<endl;
-	//cout<<"总改动的read条数（subs） ： "<<schange<<endl<<endl;
-	//cout<<"总改动的read条数（deletion） ： "<<achange<<endl<<endl;
-	//cout<<"总改动的read条数（insertion） ： "<<mchange<<endl<<endl;
 
 	//cout<<"Unconvincing correction "<<nochange<<endl;
 	cout<<"the number of corrected subs  ： "<<schange<<endl;
