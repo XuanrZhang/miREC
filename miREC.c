@@ -351,7 +351,6 @@ string find_cankmer(string mer){
 	for(unsigned int i=0; i<mer.size(); i++)
 	{	
 		kmer_cor = mer;
-		//cout<<kmer_cor<<" "<<i<<" "<<mer[i]<<endl;
 		for(int j=0; j<4; j++)
 		{
 			if(mer[i] != invert_code_rule[j])
@@ -363,9 +362,7 @@ string find_cankmer(string mer){
 			    {
 			    	if( kmerfreq[hash_index][i].kmer == kmer_cor )
 			    	{
-				 		//"find a correct candidate,which freq is not 1
-				 		//cout<<K_mer[it-K_mer.begin()]<<" "<<K_freq[it-K_mer.begin()]<<endl;
-				 		//加设一个阈值，频率低于改值不作为待修改目标kmer
+
 				 		if( kmerfreq[hash_index][i].freq > tmp_freq )
 				 		{
 				 			tmp_freq = kmerfreq[hash_index][i].freq;
