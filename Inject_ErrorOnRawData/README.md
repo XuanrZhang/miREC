@@ -10,7 +10,7 @@ cd miREC/Inject_ErrorOnRawData/
 
 make
 
-chmod +x inject_errr.sh
+chmod +x inject_err.sh
 
 
 ## example
