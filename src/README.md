@@ -115,3 +115,5 @@ The output will be saved to the directory of ./Data/synthetic_963miRNAs_Reads/ou
 - *.count.txt saves the copy numbers before and after correction by miREC and Karect.
 - *.frenochangereads.txt records the sequences whose frequencies are unchanged between before and after correction and the editing distance with the 963 miRNAs.
 - *.stats.txt has detailed descriptions for itself.
+# Question
+If you run with any bugs, please email to pengyao.ping@student.uts.edu.au
