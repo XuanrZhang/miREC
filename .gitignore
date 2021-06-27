@@ -1,0 +1,10 @@
+/Data/synthetic_963miRNAs_Reads/filtered_NN_removed_fa/
+/Data/synthetic_963miRNAs_Reads/NN_removed_fa/
+/src/test.py
+/src/runfa.py
+/src/runfq.py
+/Data/input/
+/Data/synthetic_963miRNAs_Reads/filtered_NN_removed_raw_fq/*
+/Data/synthetic_963miRNAs_Reads/corrected/
+/Data/synthetic_963miRNAs_Reads/NN_removed_raw_fq/*
+/Data/synthetic_963miRNAs_Reads/raw_fq/*

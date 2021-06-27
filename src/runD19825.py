@@ -12,9 +12,9 @@ from Utils import Utils
 
 def main():
     start = time.time()
-    miRNA_file = "./data/input/963/GSE139936_180719_GEO_miRNAs.txt"
-    input_dir = "/home/pping/Data/miREC/data/input/"
-    output_dir = "/home/pping/Data/miREC/data/output/countD19_8_25/"
+    miRNA_file = "./Data/synthetic_963miRNAs_Reads/963miRNAs/GSE139936_180719_GEO_miRNAs.txt"
+    input_dir = "./Data/synthetic_963miRNAs_Reads/"
+    output_dir = "./Data/synthetic_963miRNAs_Reads/output/countD19_8_25/"
 
     U = Utils()
 
