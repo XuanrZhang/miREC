@@ -6,6 +6,7 @@ The code in the src directory is used to test miREC in comparison with Karect on
 The test was to verify
 - whether our detected erroneous reads can be all corrected into one of the 963 miRNAs, and
 - whether any new sequences are generated after the correction step.
+
 An ideal performance should be: the corrected reads are all the sequencing reads of the 963 miRNAs, and previously non-existing reads are never not created.
 
 # Dependencies
@@ -111,6 +112,6 @@ Please see the README.md of https://github.com/aminallam/karect, after correctio
 Notes: For using the files conveniently, I used the same file names to save the sequences after correction.
 # Output
 The output will be saved to the directory of ./Data/synthetic_963miRNAs_Reads/output/ . For each dataset (e.g. D1910246.assembled.2NN.fastq), it will produce three output (e.g. D1910246.assembled.2NN.fastq.count.txt, D1910246.assembled.2NN.fastq.frenochangereads.txt and D1910246.assembled.2NN.fastq.stats.txt)
-- *.count.txt: it saves the copy numbers before and after correction by miREC and Karect.
-- *.frenochangereads.txt: it records the sequences whose frequencies are unchanged between before and after correction and the editing distance with the 963 miRNAs.
-- *.stats.txt: see the description in the file.
+- *.count.txt saves the copy numbers before and after correction by miREC and Karect.
+- *.frenochangereads.txt records the sequences whose frequencies are unchanged between before and after correction and the editing distance with the 963 miRNAs.
+- *.stats.txt has detailed descriptions for itself.
