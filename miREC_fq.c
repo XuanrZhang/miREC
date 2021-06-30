@@ -7,8 +7,6 @@
 #include <unistd.h>
 #include "omp.h"
 
-//#include "miREC.h"
-
 using namespace std;
 
 const char invert_code_rule[4] = {'A', 'C', 'G', 'T'}; //decoding rule
@@ -94,26 +92,20 @@ inline void displayParams() {
 //get params
 inline void getPars(int argc, char* argv[]) {
 	v1logger = &std::cout;
-	//bool is1 = false, is2 = false, is3 = false;
-	//bool iskmer = false; //four
 	int oc;
 	while ((oc = getopt(argc, argv, "k:m:l:f:t:hf")) >= 0) {
 		switch (oc) {
 			case 'k':
 				K_value = atoi(optarg);
-				//iskmer = true;
 				break;
 			case 'm':
 				m_FN = optarg;
-				//is1 = true;
 				break;
 			case 'l':
 				l_FN = optarg;
-				//is2 = true;
 				break;
 			case 'f':
 				f_FN = optarg;
-				//is3 = true;
 				break;
 			case 't':
 				t_FN = atoi(optarg);
@@ -128,11 +120,6 @@ inline void getPars(int argc, char* argv[]) {
 		}
 	}
 
-	// if (!is1 || !is2 || !is3) {
-	// 	fprintf(stderr, "Required parameters are not provided!!\n\n");
-	// 	exit(1);
-	// }
-	
 	std::ifstream f;
 
 	f.open(m_FN);
@@ -156,7 +143,6 @@ inline void getPars(int argc, char* argv[]) {
 	}
 	f.close();
 
-	//assert(kmer <= L && kmer%4==0);
 }
 
 //setting parameters, refering to read copy at least 6 in simu_datasets
@@ -355,8 +341,7 @@ int low_kmercheck(string read){
     		}
     	}	
     }
-   // cout<<"ERROR : kmer are not in mer_freq file."<<endl;
-	return 1;
+    return 1;
 }
 
 //find candidate correct kmer
@@ -369,7 +354,6 @@ string find_cankmer(string mer, int readID, int kmer_posi){
 	for(unsigned int i=0; i<mer.size(); i++)
 	{	
 		kmer_cor = mer;
-		//cout<<kmer_cor<<" "<<i<<" "<<mer[i]<<endl;
 		for(int j=0; j<4; j++)
 		{
 			if(mer[i] != invert_code_rule[j])
@@ -437,7 +421,6 @@ int main(int argc, char *argv[]) {
 		unsigned int read_len=0;
 		int tmp_readf_b = 0, tmp_readf_a =0;
 		tmp_readf_b = read_expresscheck(F_read.at(i));
-		//cout<<F_id.at(i)<<"  "<<F_read.at(i)<<endl;
 		if( tmp_readf_b < errread_setting)
 		{
  			//this read exist errors and need to be corrected	
@@ -534,10 +517,6 @@ int main(int argc, char *argv[]) {
 		outfile<<F_id.at(i)<<endl<<F_read.at(i)<<endl<<"+"<<endl<<F_quality.at(i)<<endl; 
 		outlistfile<<F_id.at(i)<<" "<<F_read.at(i)<<" "<<F_quality.at(i)<<endl;
 		
-		// //for fasta file
-		// outfile<<F_id.at(i)<<endl<<F_read.at(i)<<endl; 
-		// outlistfile<<F_id.at(i)<<" "<<F_read.at(i)<<endl;
-
 		if(F_flag.at(i) == 1)
 		{
 			correctedfile<<F_id.at(i)<<" "<<F_read.at(i)<<endl;
