@@ -6,7 +6,7 @@
 #include <iostream>
 #include <unistd.h>
 #include "omp.h"
-//#include "miREC.h"
+
 
 using namespace std;
 
@@ -93,18 +93,14 @@ inline void displayParams() {
 //get params
 inline void getPars(int argc, char* argv[]) {
 	v1logger = &std::cout;
-	//bool is1 = false, is2 = false, is3 = false;
-	//bool iskmer = false; //four
 	int oc;
 	while ((oc = getopt(argc, argv, "k:t:m:s:b:l:f:hf")) >= 0) {
 		switch (oc) {
 			case 'k':
 				K_value = atoi(optarg);
-				//iskmer = true;
 				break;
 			case 'm':
 				m_FN = optarg;
-				//is1 = true;
 				break;
 			case 's':
 				mm_FN = optarg;
@@ -123,7 +119,6 @@ inline void getPars(int argc, char* argv[]) {
 				break;
 			case 'f':
 				f_FN = optarg;
-				//is3 = true;
 				break;
 			case 'h':
 				displayHelp(argv[0]);
@@ -133,13 +128,7 @@ inline void getPars(int argc, char* argv[]) {
 				exit(1);
 				break;
 		}
-	}
-
-	// if (!is1 || !is2 || !is3) {
-	// 	fprintf(stderr, "Required parameters are not provided!!\n\n");
-	// 	exit(1);
-	// }
-	
+	}	
 	std::ifstream f;
 
 	f.open(m_FN);
@@ -176,8 +165,6 @@ inline void getPars(int argc, char* argv[]) {
 		exit(1);
 	}
 	f.close();
-
-	//assert(kmer <= L && kmer%4==0);
 }
 
 //setting parameters, refering to read copy at least 6 in simu_datasets
@@ -372,7 +359,6 @@ int low_kmercheck(string read){
     		}
     	}	
     }
-   // cout<<"ERROR : kmer are not in mer_freq file."<<endl;
 	return 1;
 }
 
@@ -386,7 +372,6 @@ string find_cankmer(string mer){
 	for(unsigned int i=0; i<mer.size(); i++)
 	{	
 		kmer_cor = mer;
-		//cout<<kmer_cor<<" "<<i<<" "<<mer[i]<<endl;
 		for(int j=0; j<4; j++)
 		{
 			if(mer[i] != invert_code_rule[j])
@@ -399,14 +384,11 @@ string find_cankmer(string mer){
 			    	if( kmerfreq[hash_index][i].kmer == kmer_cor )
 			    	{
 				 		//"find a correct candidate,which freq is not 1
-				 		//cout<<K_mer[it-K_mer.begin()]<<" "<<K_freq[it-K_mer.begin()]<<endl;
 				 		//加设一个阈值，频率低于改值不作为待修改目标kmer
 				 		if( kmerfreq[hash_index][i].freq > tmp_freq )
 				 		{
 				 			tmp_freq = kmerfreq[hash_index][i].freq;
 				 			tmp_cor = kmer_cor;
-				 		// 	//info illustrate: position(in kmer)-correct_to-freq(cor_kmer)
-				 		// 	info = to_string(tmp_freq) + "," + to_string(i) + "," + to_string(j) ;
 				 		}
 				 	}	    			
 			    }
@@ -443,14 +425,11 @@ string find_cankmera(string mer){
 				if( kmer_a[hash_index][i].kmer == small )
 				{
 			 		//"find a correct candidate,which freq is not 1
-			 		//cout<<K_mer[it-K_mer.begin()]<<" "<<K_freq[it-K_mer.begin()]<<endl;
 			 		//加设一个阈值，频率低于改值不作为待修改目标kmer
 			 		if( kmer_a[hash_index][i].freq > tmp_freq )
 			 		{
 			 			tmp_freq = kmer_a[hash_index][i].freq;
 			 			tmp_cor = kmer_cor;
-			 		// 	//info illustrate: position(in kmer)-correct_to-freq(cor_kmer)
-			 		// 	info = to_string(tmp_freq) + "," + to_string(i) + "," + to_string(j) ;
 			 		}
 			 	}	    			
 			}
@@ -566,31 +545,23 @@ int main(int argc, char *argv[]) {
 						corkmer = find_cankmer(small);
 						if ( corkmer != "Nofound" )
 						{
-							//替换
+							//subs
 		 					//start correction
 		 					if(Flag ==0)
 		 					{
 		 						check_read = tmp;
 		 						check_read.replace(j, K_value, corkmer);
-
-		 						//cout<<"改的base位于read的第 "<<j+Cor_info[it-Err_Kmer.begin()][1]+1<<endl;
 		 						//check freq of revised read
-
 		 						if(read_expresscheck(check_read) > changeread_setting ){ 						
 
-		 							//cout<<"read_ID : "<<F_id.at(i)<<endl;
-		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]<<endl;
 		 							F_read.at(i).replace(j, K_value, corkmer);
 		 							// readfreqs_change++;
 		 							__sync_fetch_and_add(&schange, 1);
-		 							//cout<<"read : "<<F_read.at(i)<<endl;
-
 		 							F_flag.at(i) = 1;
 		 							check_twice = check_twice + 1;
 		 							continue;
 		 						}
 		 						else{
-		 							//cout<<"creat a new read------ "<<endl;
 		 							__sync_fetch_and_add(&nochange, 1);
 		 						}	
 		 
@@ -604,13 +575,9 @@ int main(int argc, char *argv[]) {
 		 						//cout<<"改后的链"<<F_read.at(i)<<endl;
 		 						
 		 						if(read_expresscheck(check_read) > changeread_setting ){
-		 							//cout<<"read_ID : "<<F_id.at(i)<<endl;
-		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]<<endl;
 		 							F_read.at(i).replace(j, K_value,reverse);
 		 							// readfreqs_change++;
 		 							__sync_fetch_and_add(&schange, 1);
-		 							//cout<<"read : "<<F_read.at(i)<<endl;
-
 		 							F_flag.at(i) = 1;
 		 							check_twice = check_twice + 1;
 		 							continue;
@@ -633,25 +600,19 @@ int main(int argc, char *argv[]) {
 		 					{
 		 						check_read = tmp;
 		 						check_read.replace(j, K_value, corkmer);
-
-		 						//cout<<"改的base位于read的第 "<<j+Cor_info[it-Err_Kmer.begin()][1]+1<<endl;
 		 						//check freq of revised read
 
 		 						if(read_expresscheck(check_read) > changeread_setting ){ 						
 
-		 							//cout<<"read_ID : "<<F_id.at(i)<<endl;
-		 							//cout<<"read频率改变： "<<pre_fre<<" <--> "<<check_frevise(check_read)<<"  kmer频率变为 ------"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[0]<<"纠正信息 ---"<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[1]<<" "<<process_corinfo(Cor_info[it-Err_Kmer.begin()])[2]<<endl;
 		 							F_read.at(i).replace(j, K_value, corkmer);
 		 							F_quality.at(i).insert(0,1,F_quality.at(i)[1]);
 		 							__sync_fetch_and_add(&achange, 1);
-		 							//cout<<"read : "<<F_read.at(i)<<endl;
 
 		 							F_flag.at(i) = 1;
 		 							check_twice = check_twice + 1; 
 		 							continue;
 		 						}
 		 						else{
-		 							//cout<<"creat a new read------ "<<endl;
 		 							__sync_fetch_and_add(&nochange, 1);
 		 						}	
 		 
@@ -662,14 +623,12 @@ int main(int argc, char *argv[]) {
 		 						check_read = tmp;
 		 						reverse = rever_comp(corkmer);
 		 						check_read.replace(j, K_value,reverse);
-		 						//cout<<"改后的链"<<F_read.at(i)<<endl;
 		 						
 		 						if(read_expresscheck(check_read) > changeread_setting ){
 		 							F_read.at(i).replace(j, K_value,reverse);
 		 							F_quality.at(i).insert(0,1,F_quality.at(i)[1]);
 		 							__sync_fetch_and_add(&achange, 1);
-		 							//cout<<"read : "<<F_read.at(i)<<endl;
-
+		 				
 		 							F_flag.at(i) = 1;
 		 							check_twice = check_twice + 1;
 		 							continue;
@@ -692,8 +651,6 @@ int main(int argc, char *argv[]) {
 		 					{
 		 						check_read = tmp;
 		 						check_read.replace(j, K_value, corkmer);
-
-		 						//cout<<"改的base位于read的第 "<<j+Cor_info[it-Err_Kmer.begin()][1]+1<<endl;
 		 						//check freq of revised read
 
 		 						if(read_expresscheck(check_read) > changeread_setting ){ 						
@@ -701,7 +658,6 @@ int main(int argc, char *argv[]) {
 		 							F_read.at(i).replace(j, K_value, corkmer);
 		 							F_quality.at(i).erase(0,1);
 		 							__sync_fetch_and_add(&mchange, 1);
-		 							//cout<<"read : "<<F_read.at(i)<<endl;
 
 		 							F_flag.at(i) = 1;
 		 							check_twice = check_twice + 1;
@@ -719,13 +675,11 @@ int main(int argc, char *argv[]) {
 		 						check_read = tmp;
 		 						reverse = rever_comp(corkmer);
 		 						check_read.replace(j, K_value,reverse);
-		 						//cout<<"改后的链"<<F_read.at(i)<<endl;
 		 						
 		 						if(read_expresscheck(check_read) > changeread_setting ){
 		 							F_read.at(i).replace(j, K_value,reverse);
 		 							F_quality.at(i).erase(0,1);
 		 							__sync_fetch_and_add(&mchange, 1);
-		 							//cout<<"read : "<<F_read.at(i)<<endl;
 		 							F_flag.at(i) = 1;
 		 							check_twice = check_twice + 1;
 		 							continue;
@@ -738,7 +692,6 @@ int main(int argc, char *argv[]) {
 		 					}
 						}
 
-						// if( check_twice >= 2){cout<<"------------a kmer changed twice-----------------";}
 
 					}
 				}
@@ -752,18 +705,12 @@ int main(int argc, char *argv[]) {
 		outfile<<F_id.at(i)<<endl<<F_read.at(i)<<endl<<"+"<<endl<<F_quality.at(i)<<endl; 
 		outlistfile<<F_id.at(i)<<" "<<F_read.at(i)<<" "<<F_quality.at(i)<<endl;
 
-		// //for fasta file
-		// outfile<<F_id.at(i)<<endl<<F_read.at(i)<<endl; 
-		// outlistfile<<F_id.at(i)<<" "<<F_read.at(i)<<endl;
-
 		if(F_flag.at(i) == 1)
 		{
 			correctedfile<<F_id.at(i)<<" "<<F_read.at(i)<<endl;
 		}
 	}
-
-
-	//cout<<"Unconvincing correction "<<nochange<<endl;
+	
 	cout<<"the number of corrected subs  ： "<<schange<<endl;
 	cout<<"the number of corrected deletion  ： "<<achange<<endl;
 	cout<<"the number of corrected insertion  ： "<<mchange<<endl;
