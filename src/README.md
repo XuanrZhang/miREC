@@ -115,7 +115,7 @@ python ./src/runD18825.py
 - First, please follow the instructions of README.md in the root directory to make sure **miREC**.sh works well
 - Then, run the following script file.
 ```
-./src/runD18825.sh 
+./src/miRECD18825.sh 
 ```
 ### 2.2 Do error correction using **Karect**
 - Please see the README.md of https://github.com/aminallam/karect, after correction, you should move or copy the corrected results to the folder like ./Data/synthetic_963miRNAs_Reads/corrected/D18_Karect/. But you need to change the corrected .fastq filenames like me, otherwise you need to modify the code of Utils.py.
