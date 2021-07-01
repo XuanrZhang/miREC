@@ -1,0 +1,27 @@
+Total reads count of the dataset is: 547087
+miREC:
+The number of errors corrected by miREC is: 43122
+The number of distinct reads was decreased from 261274 to 234353 after the correction by miREC
+The number of distinct sequences in the intersection of the pre-correction and miREC correction sets is: 234353
+The number of distinct sequences in the miREC correction set but not in the intersection of the pre-correction and miREC correction sets is: 0
+The number of increased new sequences by miREC correction is: 0
+The read counts of the 963 miRNAs increased about 19.2805% on average (from total 223921 to 267094) after miREC correction
+The number of total distinct reads whose frequences are not changed is：233418
+The number and percentage of distinct reads that have a minimum distance 0 with the set of the 963 miRNAs is: 23 and 0.0099%
+The number and percentage of distinct reads that have a minimum distance 1 with the set of the 963 miRNAs is: 1813 and 0.7767%
+The number and percentage of distinct reads that have a minimum distance 2 with the set of the 963 miRNAs is: 47832 and 20.4920%
+The number and percentage of distinct reads that have a minimum distance >=3 with the set of the 963 miRNAs is: 183750 and 78.7214%
+
+
+Karect:
+The number of errors corrected by Karect is: 129410
+The number of distinct reads was decreased from 261274 to 213706 after the correction by Karect
+The number of distinct sequences in the intersection of the pre-correction and Karect correction sets is: 175204
+The number of distinct sequences in the Karect correction set but not in the intersection of the pre-correction and Karect correction sets is: 38502
+The number of increased new sequences by Karect correction is: 38501
+The read counts of the 963 miRNAs increased about 8.0645% on average (from total 223921 to 241979)after Karect correction
+The number of total distinct reads whose frequences are not changed is: 163525
+The number and percentage of distinct reads that have a minimum distance 0 with the set of the 963 miRNAs is: 8 and 0.0049%
+The number and percentage of distinct reads that have a minimum distance 1 with the set of the 963 miRNAs is: 11095 and 6.7849%
+The number and percentage of distinct reads that have a minimum distance 2 with the set of the 963 miRNAs is: 21609 and 13.2145%
+The number and percentage of distinct reads that have a minimum distance >=3 with the set of the 963 miRNAs is: 130813 and 79.9957%
