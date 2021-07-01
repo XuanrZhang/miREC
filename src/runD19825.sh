@@ -1,8 +1,8 @@
 #!/bin/bash
 
-Output_dir=./Data/synthetic_963miRNAs_Reads/corrected/D19_miREC_8_25/
-input_dir=./Data/synthetic_963miRNAs_Reads/D19_NN_removed_raw_fq/
-files=$(ls ./Data/synthetic_963miRNAs_Reads/D19_NN_removed_raw_fq/)
+Output_dir=./Data/Verify_by963miRXploreData/corrected/D19_miREC_8_25/
+input_dir=./Data/Verify_by963miRXploreData/D19_NN_removed_raw_fq/
+files=$(ls ./Data/Verify_by963miRXploreData/D19_NN_removed_raw_fq/)
 for file in $files
 do
     echo $input_dir$file

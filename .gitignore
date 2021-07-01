@@ -1,9 +1,8 @@
-/Data/synthetic_963miRNAs_Reads/filtered_NN_removed_fa/
-/Data/synthetic_963miRNAs_Reads/NN_removed_fa/
-/src/test.py
-/src/runfa.py
-/src/runfq.py
-/Data/synthetic_963miRNAs_Reads/filtered_NN_removed_raw_fq/*
-/Data/synthetic_963miRNAs_Reads/corrected/
-/Data/synthetic_963miRNAs_Reads/NN_removed_raw_fq/*
-/Data/synthetic_963miRNAs_Reads/raw_fq/*
+/Data/Verify_by963miRXploreData/D18_filtered_NN_removed_fa/
+/Data/Verify_by963miRXploreData/D18_NN_removed_fa/
+/Data/Verify_by963miRXploreData/D18_filtered_NN_removed_raw_fq/*
+/Data/Verify_by963miRXploreData/corrected/
+/Data/Verify_by963miRXploreData/D18_NN_removed_raw_fq/*
+/Data/Verify_by963miRXploreData/D18_raw_fq/*
+.gitignore
+/Data/Verify_by963miRXploreData/
