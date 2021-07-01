@@ -1,4 +1,5 @@
 The code in the **Verify_963miRXplore** directory is used to test **miREC** in comparison with **Karect** on sequencing reads datasets of **963 miRXplore Universal Reference miRNAs** (three replicates) and their spike-in at eukaryotic cells.
+
 The test was to **verify**：
 - whether our detected erroneous reads can be all corrected into one of the 963 miRNAs, and
 - whether any new sequences are generated after the correction step.
