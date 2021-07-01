@@ -1,63 +1,21 @@
 # Download the dataset
-## 1. The datasets can be downloaded from Google Drive (https://drive.google.com/drive/folders/1YDPxrH_B-StPKLgYnkcDXhtCnq5vatt3?usp=sharing). 
+## 1. The datasets can be downloaded from Google Drive (https://drive.google.com/drive/u/1/folders/1YDPxrH_B-StPKLgYnkcDXhtCnq5vatt3). 
 
 For reproducing the test process without any modification, you can put the datasets into the relevant folders(like the following tree)  
 ```
-│   └── Verify_by963miRXploreData
-│       ├── 963miRNAs
-│       │   └── GSE139936_180719_GEO_miRNAs.txt
-│       ├── corrected
-│       │   ├── D18_Karect
-│       │   │   ├── 180719Ded_D18-6962_1_sequence.3clipped_NN_removed.fq
-│       │   │   ├── 180719Ded_D18-6962_2_sequence.rc3clipped_NN_removed.fq
-│       │   │   ├── 180719Ded_D18-6963_1_sequence.3clipped_NN_removed.fq
-│       │   │   ├── 180719Ded_D18-6963_2_sequence.rc3clipped_NN_removed.fq
-│       │   │   ├── 180719Ded_D18-6964_1_sequence.3clipped_NN_removed.fq
-│       │   │   └── 180719Ded_D18-6964_2_sequence.rc3clipped_NN_removed.fq
-│       │   ├── D18_miREC_8_20
-│       │   │   ├── 180719Ded_D18-6962_1_sequence.3clipped_NN_removed.fq
-│       │   │   ├── 180719Ded_D18-6962_2_sequence.rc3clipped_NN_removed.fq
-│       │   │   ├── 180719Ded_D18-6963_1_sequence.3clipped_NN_removed.fq
-│       │   │   ├── 180719Ded_D18-6963_2_sequence.rc3clipped_NN_removed.fq
-│       │   │   ├── 180719Ded_D18-6964_1_sequence.3clipped_NN_removed.fq
-│       │   │   └── 180719Ded_D18-6964_2_sequence.rc3clipped_NN_removed.fq
-│       │   ├── D18_miREC_8_25
-│       │   │   ├── 180719Ded_D18-6962_1_sequence.3clipped_NN_removed.fq
-│       │   │   ├── 180719Ded_D18-6962_2_sequence.rc3clipped_NN_removed.fq
-│       │   │   ├── 180719Ded_D18-6963_1_sequence.3clipped_NN_removed.fq
-│       │   │   ├── 180719Ded_D18-6963_2_sequence.rc3clipped_NN_removed.fq
-│       │   │   ├── 180719Ded_D18-6964_1_sequence.3clipped_NN_removed.fq
-│       │   │   └── 180719Ded_D18-6964_2_sequence.rc3clipped_NN_removed.fq
-│       │   ├── D19_Karect
-│       │   │   └── D19-10246.assembled.2NN.fastq
-│       │   ├── D19_miREC_8_20
-│       │   │   └── D19-10246.assembled.2NN.fastq
-│       │   └── D19_miREC_8_25
-│       │       └── D19-10246.assembled.2NN.fastq
-│       ├── D18_filtered_NN_removed_raw_fq
-│       │   ├── 180719Ded_D18-6962_1_sequence.3clipped_NN_removed.fq
-│       │   ├── 180719Ded_D18-6962_2_sequence.rc3clipped_NN_removed.fq
-│       │   ├── 180719Ded_D18-6963_1_sequence.3clipped_NN_removed.fq
-│       │   ├── 180719Ded_D18-6963_2_sequence.rc3clipped_NN_removed.fq
-│       │   ├── 180719Ded_D18-6964_1_sequence.3clipped_NN_removed.fq
-│       │   └── 180719Ded_D18-6964_2_sequence.rc3clipped_NN_removed.fq
-│       ├── D18_NN_removed_raw_fq
-│       │   ├── 180719Ded_D18-6962_1_sequence.3clipped_NN_removed.fq
-│       │   ├── 180719Ded_D18-6962_2_sequence.rc3clipped_NN_removed.fq
-│       │   ├── 180719Ded_D18-6963_1_sequence.3clipped_NN_removed.fq
-│       │   ├── 180719Ded_D18-6963_2_sequence.rc3clipped_NN_removed.fq
-│       │   ├── 180719Ded_D18-6964_1_sequence.3clipped_NN_removed.fq
-│       │   └── 180719Ded_D18-6964_2_sequence.rc3clipped_NN_removed.fq
-│       ├── D18_raw_fq
-│       │   ├── 180719Ded_D18-6962_1_sequence.3clipped.fq
-│       │   ├── 180719Ded_D18-6962_2_sequence.rc3clipped.fq
-│       │   ├── 180719Ded_D18-6963_1_sequence.3clipped.fq
-│       │   ├── 180719Ded_D18-6963_2_sequence.rc3clipped.fq
-│       │   ├── 180719Ded_D18-6964_1_sequence.3clipped.fq
-│       │   └── 180719Ded_D18-6964_2_sequence.rc3clipped.fq
-│       ├── D19_NN_removed_raw_fq
-│       │   └── D19-10246.assembled.2NN.fastq
-
+├── Data
+│   ├── 963miRXplore_data
+│   │   ├── 963miRNAs
+│   │   │   └── GSE139936_180719_GEO_miRNAs.txt
+│   │   ├── D18_raw_fq
+│   │   │   ├── 180719Ded_D18-6962_1_sequence.3clipped.fq
+│   │   │   ├── 180719Ded_D18-6962_2_sequence.rc3clipped.fq
+│   │   │   ├── 180719Ded_D18-6963_1_sequence.3clipped.fq
+│   │   │   ├── 180719Ded_D18-6963_2_sequence.rc3clipped.fq
+│   │   │   ├── 180719Ded_D18-6964_1_sequence.3clipped.fq
+│   │   │   └── 180719Ded_D18-6964_2_sequence.rc3clipped.fq
+│   │   ├── D19_NN_removed_raw_fq
+│   │   │   └── D19-10246.assembled.2NN.fastq
 ```
 
 ### 2. You also can download the datasets from NCBI
