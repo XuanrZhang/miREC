@@ -1,4 +1,4 @@
-The code in the **Verify_963miRXplore** directory is used to test **miREC** in comparison with **Karect** on sequencing reads datasets of **963 miRXplore Universal Reference miRNAs** (three replicates) and their spike-in at eukaryotic cells.
+The code in the **Verify_963miRXploreData** directory is used to test **miREC** in comparison with **Karect** on sequencing reads datasets of **963 miRXplore Universal Reference miRNAs** (three replicates) and their spike-in at eukaryotic cells.
 
 The test was to **verify**：
 - whether our detected erroneous reads can be all corrected into one of the 963 miRNAs, and
@@ -28,7 +28,7 @@ git clone https://github.com/Jappy0/**miREC**
 or 
 ```
 git clone https://github.com/XuanrZhang/**miREC**
-cd miREC/Verify_963miRXplore/
+cd miREC/Verify_963miRXploreData/
 ```
 ### **Step 2**
 Download the dataset (https://drive.google.com/drive/folders/1YDPxrH_B-StPKLgYnkcDXhtCnq5vatt3?usp=sharing) and put them into the relevant folders(like the following tree)  
@@ -91,7 +91,7 @@ Download the dataset (https://drive.google.com/drive/folders/1YDPxrH_B-StPKLgYnk
 ```
 ### **Step 3** 
 ```
-python ./Verify_963miRXplore/runD18825.py 
+python ./Verify_963miRXploreData/runD18825.py 
 ```
 - For runD18825.py, it uses parameters of kmers [8, 25] and the datasets included in the folders of filtered_NN_removed_raw_fq, corrected/D18_**miREC**_8_25, corrected/D18_karect and 963miRNAs. 
 - For runD19820.py and runD19825.py, they run the same test with the same data like runD18825.py but using different parameters for **miREC**.
@@ -117,7 +117,7 @@ python ./Verify_963miRXplore/runD18825.py
 - First, please follow the instructions of README.md in the root directory to make sure **miREC**.sh works well
 - Then, run the following script file.
 ```
-./Verify_963miRXplore/miRECD18825.sh 
+./Verify_963miRXploreData/miRECD18825.sh 
 ```
 ### 2.2 Do error correction using **Karect**
 - Please see the README.md of https://github.com/aminallam/karect, after correction, you should move or copy the corrected results to the folder like ./Data/synthetic_963miRNAs_Reads/corrected/D18_Karect/. But you need to change the corrected .fastq filenames like me, otherwise you need to modify the code of Utils.py.
