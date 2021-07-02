@@ -1,4 +1,5 @@
-# Overview
+# Verification results on the sequencing reads of the 963 miRXplore Universal Reference miRNAs (pure control and spike-in)
+
 The code in the **Verify_963miRXploreData** directory is used to test **miREC** in comparison with **Karect**(https://github.com/aminallam/karect) on sequencing reads datasets of **963 miRXplore Universal Reference miRNAs** (three replicates) and their spike-in at eukaryotic cells.
 
 The test was to **verify**：
