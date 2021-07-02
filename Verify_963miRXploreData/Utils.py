@@ -333,7 +333,7 @@ class Utils:
         if n_cpu > n:
             print("The CPU/core's number is greater than that of files")
             for filename in file_names:
-                procs.append(multiprocessing.Process(target=self.multi_count, args=(miRNA_seq, input_dir1 + filename, input_dir2 + filename, input_dir3 + filename, output_dir+filename + '.count.txt', output_dir+filename + '.stats.txt', output_dir+filename + '.freqnochangereads.txt')))
+                procs.append(multiprocessing.Process(target=self.multi_count, args=(miRNA_seq, input_dir1 + filename, input_dir2 + filename, input_dir3 + 'karect_' + filename, output_dir+filename + '.count.txt', output_dir+filename + '.stats.txt', output_dir+filename + '.freqnochangereads.txt')))
             for proc in procs:
                 proc.start()
             for proc in procs:
@@ -350,7 +350,7 @@ class Utils:
                 procs1 = []
                 print("End Index:{}".format(end))
                 for filename1 in file_names[start:end]:
-                    procs1.append(multiprocessing.Process(target=self.multi_count, args=(miRNA_seq, input_dir1 + filename, input_dir2 + filename, input_dir3 + filename, output_dir+filename + '.count.txt', output_dir+filename + '.stats.txt', output_dir+filename + '.freqnochangereads.txt')))
+                    procs1.append(multiprocessing.Process(target=self.multi_count, args=(miRNA_seq, input_dir1 + filename, input_dir2 + filename, input_dir3 + 'karect_' + filename, output_dir+filename + '.count.txt', output_dir+filename + '.stats.txt', output_dir+filename + '.freqnochangereads.txt')))
                 for proc1 in procs1:
                     proc1.start()
                 for proc1 in procs1:
@@ -364,7 +364,7 @@ class Utils:
                 print("Start Index:{}".format(end - n_cpu))
                 print("End Index:{}".format(end - n_cpu + remain))
                 for filename1 in file_names[end : (end + remain)]:
-                    procs2.append(multiprocessing.Process(target=self.multi_count, args=(miRNA_seq, input_dir1 + filename, input_dir2 + filename, input_dir3 + filename, output_dir+filename + '.count.txt', output_dir+filename + '.stats.txt', output_dir+filename + '.freqnochangereads.txt')))
+                    procs2.append(multiprocessing.Process(target=self.multi_count, args=(miRNA_seq, input_dir1 + filename, input_dir2 + filename, input_dir3 + 'karect_' + filename, output_dir+filename + '.count.txt', output_dir+filename + '.stats.txt', output_dir+filename + '.freqnochangereads.txt')))
                 for proc2 in procs2:
                     proc2.start()
                 for proc2 in procs2:
@@ -532,7 +532,7 @@ class Utils:
                 fo.write('\t')
                 fo.write(str(value[2]))
                 fo.write('\n')
-
+        
         with open(filename5, 'w') as f5:
             print('Total reads count of the dataset is: {}'.format(len(record_seqs1)),file=f5)
             print("miREC:", file=f5)
@@ -562,7 +562,7 @@ class Utils:
             print("The number and percentage of distinct reads that have a minimum distance 1 with the set of the 963 miRNAs is: {} and {:.4%}".format(dis_num_percent_karect[1][1], dis_num_percent_karect[1][2]), file=f5)
             print("The number and percentage of distinct reads that have a minimum distance 2 with the set of the 963 miRNAs is: {} and {:.4%}".format(dis_num_percent_karect[2][1], dis_num_percent_karect[2][2]), file=f5)
             print("The number and percentage of distinct reads that have a minimum distance >=3 with the set of the 963 miRNAs is: {} and {:.4%}".format(dis_num_percent_karect[3][1], dis_num_percent_karect[3][2]), file=f5)
-
+        
         return
 
     def edit_distance(self, fin1, fin2, fout):
