@@ -1,4 +1,4 @@
-# miREC
+# miREC -- An error correction tool for miRNA reads at single-base resolution
 An error correction tool for miRNA reads at single-base resolution, which proposed a novel 3-layer lattice structure combining kmers, (k-1)mers and (k+1)mers to first time solve the problem of correcting erroneous bases in miRNA sequencing data. 
 The novelty of our method is the use of a 3-layer (k-1)mer-kmer-(k+1)mer lattice structure to maintain the frequency differences of the kmers.
 The method is particularly effective for the accurate correction of indel errors. 
