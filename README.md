@@ -77,7 +77,8 @@ We also provide copies in miREC/data file folder.
 
 	
 ## Citation
-Please cite the work "Aberration-corrected ultrafine analysis of miRNA reads at single-base resolution: better data makes better conclusion."
+Please cite the [work](https://academic.oup.com/nar/advance-article/doi/10.1093/nar/gkab610/6325352)
+Zhang, Xuan, et al. "Aberration-corrected ultrafine analysis of miRNA reads at single-base resolution: a k-mer lattice approach." Nucleic Acids Research (2021).
 
 ## Question
 If any bugs during your running, please email to xuan.zhang-5@student.uts.edu.au
