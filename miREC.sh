@@ -37,7 +37,7 @@ do
 	    echo "correct subs error only"
             R=1;;
         \?)
-            echo "Usage: args [-f] [-s] [-e] [-t] [-u] [-o][-c]"
+            echo "Usage: args [-f] [-s] [-e] [-t] [-u] [-h][-o][-c]"
             echo "-f means Input file name "
             echo "-o means Output file name "
             echo "-h means Threshod value"
