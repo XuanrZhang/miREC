@@ -34,7 +34,7 @@ Usage: ./miREC.sh -f [Input_File] -s [k_1] -e [k_end] -t [the number of threads]
 
 	Optional OPTIONS:
 	-t [the number of threads]: default is 8;
-	-h [the value of threshold]: default is 5;
+	-r [the value of threshold]: default is 5;
 	-s [k_1]: 8;
 	-e [k_end]: 15;
 	-o [Ouput_FileName]: default is correct_read.fastq;
@@ -45,7 +45,7 @@ Examples:
 
 	# test using simulated datasets in github folders.
 	./miREC.sh -f ./Data/simulated_data/mix_data/simumD1.fq -s 8 -e 15 -t 26 (correct substitution and indel errors, with threshold_value 5 and k_value from 8 to 15, with 26 threads)
-	./miREC.sh -f ./Data/simulated_data/mix_data/simumD1.fq -s 8 -e 15 -t 26 -h 6 (correct substitution and indel errors, with threshold_value 5 and k_value from 8 to 15, with 26 threads, with kmer frequency threshold as 6)
+	./miREC.sh -f ./Data/simulated_data/mix_data/simumD1.fq -s 8 -e 15 -t 26 -r 6 (correct substitution and indel errors, with threshold_value 5 and k_value from 8 to 15, with 26 threads, with kmer frequency threshold as 6)
 	./miREC.sh -f ./Data/simulated_data/mix_data/simumD1.fq -s 8 -e 15 -t 26 -c TGGAATTCTCGGGTGCCAAGG (cutadapter with sequence "TGGAATTCTCGGGTGCCAAGG" and then correct substitution and indel errors, with threshold_value 5 and k_value from 8 to 15, with 26 threads)
 	./miREC.sh -f ./Data/simulated_data/mix_data/simumD1.fq -s 8 -e 15 -t 26 -u -o Correct.fastq(correct substitution errors only, with threshold_value 5 and k_value from 8 to 15, with 26 threads; Setting output file name as Correct.fastq)
 	
