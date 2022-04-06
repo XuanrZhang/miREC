@@ -16,7 +16,7 @@ const char* inbase = "ATCG";
 
 unsigned int K_value;
 unsigned int t_FN = 4;
-int r_FN = 4;
+int r_FN = 5;
 std::string m_FN;
 std::string ma_FN;
 std::string mm_FN;
