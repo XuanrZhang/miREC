@@ -16,6 +16,7 @@ const char* inbase = "ATCG";
 
 unsigned int K_value;
 unsigned int t_FN = 4;
+int r_FN = 4;
 std::string m_FN;
 std::string ma_FN;
 std::string mm_FN;
@@ -56,7 +57,7 @@ vector<int> F_flag;
 std::ostream *v1logger;
 
 //setting parameters, refering to read copy at least 6 in simu_datasets
-int low_setting = 5; //kmer freqency < [], may contains errors
+//int low_setting = 5; //kmer freqency < [], may contains errors,store in r_FN
 int errread_setting =5; //errornuos reads from copy number < [];
 int changeread_setting =5; //after correct, read copy > [], confirm this correction.
 
@@ -71,6 +72,7 @@ inline void displayHelp(const char* prog) {
 	printf("\t\t -m is the related k-mer frequency file name\n");
 	printf("\t\t -s is the related k-1 mer frequency file name\n");
 	printf("\t\t -b is the related k+1 mer frequency file name\n");
+	printf("\t\t -r is the value of kmer frequency threshold \n");
 	printf("\t\t -l is the current read expression-level file name\n");
 	printf("\t\t -t is the number of threads\n");
 	printf("\t\t -f is the raw read info file from fastq\n");
@@ -83,6 +85,7 @@ inline void displayHelp(const char* prog) {
 inline void displayParams() {
 	printf("k_value is k = %d\n", K_value);
 	printf("the number of threads is t = %d\n", t_FN);
+	printf("the value of threshold is r = %d\n", r_FN);
 	printf("k-mer frequency file is: %s\n", m_FN.c_str());
 	printf("k+1mer frequency file is: %s\n", ma_FN.c_str());
 	printf("k-1mer frequency file is: %s\n", mm_FN.c_str());
@@ -94,7 +97,7 @@ inline void displayParams() {
 inline void getPars(int argc, char* argv[]) {
 	v1logger = &std::cout;
 	int oc;
-	while ((oc = getopt(argc, argv, "k:t:m:s:b:l:f:hf")) >= 0) {
+	while ((oc = getopt(argc, argv, "k:t:m:s:r:b:l:f:hf")) >= 0) {
 		switch (oc) {
 			case 'k':
 				K_value = atoi(optarg);
@@ -108,6 +111,9 @@ inline void getPars(int argc, char* argv[]) {
 				break;
 			case 't':
 				t_FN = atoi(optarg);
+				break;
+			case 'r':
+				r_FN = atoi(optarg);
 				break;
 			case 'b':
 				ma_FN = optarg;
@@ -347,7 +353,7 @@ int low_kmercheck(string read){
     {
     	if( kmerfreq[hash_index][i].kmer == read )
     	{
-    		if( kmerfreq[hash_index][i].freq <= low_setting )
+    		if( kmerfreq[hash_index][i].freq <= r_FN )
     		{
 				//might have protential errors
 				return 1;
