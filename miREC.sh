@@ -86,9 +86,9 @@ then
 	echo "----------------------${i} mer frequency preparation ready";
 
 	#error correction
-	echo "./miREC_fq -k ${i} -m ${i}mer.freq -t ${T} -l expreLevel_cor.txt -f ID_read_quality_input.txt"
+	echo "./miREC_fq -k ${i} -m ${i}mer.freq -t ${T} -r ${H} -l expreLevel_cor.txt -f ID_read_quality_input.txt"
 
-	./miREC_fq -k ${i} -m ./${i}mer.freq -t ${T} -l expreLevel_cor.txt -f ID_read_quality_input.txt;
+	./miREC_fq -k ${i} -m ./${i}mer.freq -t ${T} -r ${H} -l expreLevel_cor.txt -f ID_read_quality_input.txt;
 
 	cp ID_read_quality_cor.txt ID_read_quality_input.txt 
 	#cp correct_read.fa correct_read_cp.fa
@@ -131,10 +131,10 @@ else
 	echo "----------------------${i} mer frequency preparation ready";
 
 	#error correction
-	echo "./miREC_mix_fq -k ${i} -m ${i}mer.freq -s ${tmpm}mer.freq -b ${tmpa}mer.freq -t ${T} -l expreLevel_cor.txt -f ID_read_quality_input.txt";
+	echo "./miREC_mix_fq -k ${i} -m ${i}mer.freq -s ${tmpm}mer.freq -b ${tmpa}mer.freq -t ${T} -r ${H} -l expreLevel_cor.txt -f ID_read_quality_input.txt";
 
 	# time ./miREC_fq_update -k ${i} -m /home/xuanzhan/Data/miRNA/simu/${i}mer.freq -l expreLevel_cor.txt -f ID_read_quality_input.txt >> miREC_mix${file_id[${j}]}.log;
-	./miREC_mix_fq -k ${i} -m ${i}mer.freq -s ${tmpm}mer.freq -b ${tmpa}mer.freq -t ${T} -l expreLevel_cor.txt -f ID_read_quality_input.txt;
+	./miREC_mix_fq -k ${i} -m ${i}mer.freq -s ${tmpm}mer.freq -b ${tmpa}mer.freq -t ${T} -r ${H} -l expreLevel_cor.txt -f ID_read_quality_input.txt;
 
 	echo "----------------------${i} mer correction finished";
 
