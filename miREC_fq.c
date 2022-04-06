@@ -15,6 +15,7 @@ const char* inbase = "ATCG";
 
 unsigned int K_value;
 unsigned int t_FN;
+int r_FN;
 std::string m_FN;
 std::string l_FN;
 std::string f_FN;
@@ -59,7 +60,7 @@ vector<int> Freq_a;
 std::ostream *v1logger;
 
 //setting parameters, refering to read copy at least 6 in simu_datasets
-int low_setting = 5; //kmer freqency < [], may contains errors
+//int low_setting = 5; //kmer freqency < [], may contains errors,store in a parameter(r_FN)
 int errread_setting =5; //errornuos reads from copy number < [];
 int changeread_setting =5; //after correct, read copy > [], confirm this correction.
 
@@ -75,15 +76,17 @@ inline void displayHelp(const char* prog) {
 	printf("\t\t -l is the current read expression-level file name\n");
 	printf("\t\t -f is the raw read info file from fastq\n");
 	printf("\t\t -t is the number of threads\n");
+	printf("\t\t -r is the value of frequency threshold\n");
 	
 	printf("Example:\n\t\t");
-	printf("./miREC_update -k 7 -t 16  -m 7.freq -l 18-25_expreLevel.txt -f ID_read_quality.txt\n\n");
+	printf("./miREC_update -k 7 -t 16  -m 7.freq  -r 5 -l 18-25_expreLevel.txt -f ID_read_quality.txt\n\n");
 }
 
 //show current params
 inline void displayParams() {
 	printf("k_value is k = %d\n", K_value);
 	printf("the number of threads is t = %d\n", t_FN);
+	printf("the value of frequency threshold is r = %d\n", r_FN);
 	printf("k-mer frequency file is: %s\n", m_FN.c_str());
 	printf("read expression-level file is: %s\n", l_FN.c_str());
 	printf("raw read info file is: %s\n", f_FN.c_str());
@@ -93,7 +96,7 @@ inline void displayParams() {
 inline void getPars(int argc, char* argv[]) {
 	v1logger = &std::cout;
 	int oc;
-	while ((oc = getopt(argc, argv, "k:m:l:f:t:hf")) >= 0) {
+	while ((oc = getopt(argc, argv, "k:m:l:f:t:r:hf")) >= 0) {
 		switch (oc) {
 			case 'k':
 				K_value = atoi(optarg);
@@ -110,6 +113,9 @@ inline void getPars(int argc, char* argv[]) {
 			case 't':
 				t_FN = atoi(optarg);
 				break;
+			case 'r':
+				r_FN = atoi(optarg);
+				break;				
 			case 'h':
 				displayHelp(argv[0]);
 				exit(0);			
@@ -329,7 +335,7 @@ int low_kmercheck(string read){
     {
     	if( kmerfreq[hash_index][i].kmer == read )
     	{
-    		if( kmerfreq[hash_index][i].freq <= low_setting )
+    		if( kmerfreq[hash_index][i].freq <= r_FN )
     		{
 				//might have protential errors
 				return 1;
