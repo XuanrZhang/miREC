@@ -18,7 +18,7 @@ do
             echo "Output file name is: $OPTARG"
             O=$OPTARG;;
         r)
-            echo "Threshod value is: $OPTARG"
+            echo "Frequency threshold value is: $OPTARG"
             H=$OPTARG;;
         s)
             echo "K_1 value is: $OPTARG"
