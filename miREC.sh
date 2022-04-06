@@ -8,7 +8,7 @@ T=8;
 cut=0;
 O=correct_read.fastq;
 
-while getopts f:o:h:t:s:e:c:u: op
+while getopts f:o:r:t:s:e:c:u: op
 do 
     case $op in
         f)
@@ -17,7 +17,7 @@ do
         o)
             echo "Output file name is: $OPTARG"
             O=$OPTARG;;
-        h)
+        r)
             echo "Threshod value is: $OPTARG"
             H=$OPTARG;;
         s)
@@ -37,10 +37,10 @@ do
 	    echo "correct subs error only"
             R=1;;
         \?)
-            echo "Usage: args [-f] [-s] [-e] [-t] [-u] [-h][-o][-c]"
+            echo "Usage: args [-f] [-s] [-e] [-t] [-u] [-r][-o][-c]"
             echo "-f means Input file name "
             echo "-o means Output file name "
-            echo "-h means Threshod value"
+            echo "-r means Threshod value"
             echo "-t means the number of threads(Default:8)"
             echo "-s means k_1 value"
             echo "-e means k_end value"
