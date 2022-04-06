@@ -34,6 +34,7 @@ Usage: ./miREC.sh -f [Input_File] -s [k_1] -e [k_end] -t [the number of threads]
 
 	Optional OPTIONS:
 	-t [the number of threads]: default is 8;
+	-h [the value of threshold]: default is 5;
 	-s [k_1]: 8;
 	-e [k_end]: 15;
 	-o [Ouput_FileName]: default is correct_read.fastq;
